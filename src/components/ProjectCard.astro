@@ -23,11 +23,11 @@ const {
   <!-- Image Frame -->
   <div class="relative w-full aspect-[4/3] overflow-hidden border-b border-zinc-800/30">
     <div class="absolute inset-0 pointer-events-none bg-scanlines opacity-[0.05] z-10"></div>
-    <div class="w-full h-full overflow-hidden transition-transform duration-700 ease-out group-hover:scale-105">
+    <div class="w-full h-full overflow-hidden">
       <img 
         src={imageSrc} 
         alt={title} 
-        class="w-full h-full object-cover filter grayscale contrast-[1.1] brightness-[0.85] transition-all duration-700 group-hover:filter-none group-hover:brightness-[0.95] group-hover:contrast-100"
+        class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
       />
     </div>
     
