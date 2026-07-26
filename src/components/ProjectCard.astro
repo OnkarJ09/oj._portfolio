@@ -20,8 +20,16 @@ const {
 
 <div 
   onclick={`window.open('${link}', '_blank', 'noopener,noreferrer')`}
-  class="project-card cursor-pointer relative w-full border border-zinc-800/40 bg-zinc-950/20 hover:border-orange-500/20 backdrop-blur-sm rounded-lg overflow-hidden group transition-all duration-500 font-['Chakra_Petch',sans-serif]"
+  class="project-card cursor-pointer relative w-full border border-zinc-800/40 bg-zinc-950/20 hover:border-orange-500/35 hover:shadow-[0_0_15px_rgba(249,115,22,0.08)] backdrop-blur-sm rounded-sm overflow-hidden group transition-all duration-500 font-['Chakra_Petch',sans-serif]"
 >
+  <!-- Cyber Corner Tech Brackets (hug outer corners, fade in on hover) -->
+  <div class="absolute top-0 left-0 w-2.5 h-2.5 border-t border-l border-transparent group-hover:border-orange-500 z-30 transition-all duration-300"></div>
+  <div class="absolute top-0 right-0 w-2.5 h-2.5 border-t border-r border-transparent group-hover:border-orange-500 z-30 transition-all duration-300"></div>
+  <div class="absolute bottom-0 left-0 w-2.5 h-2.5 border-b border-l border-transparent group-hover:border-orange-500 z-30 transition-all duration-300"></div>
+  <div class="absolute bottom-0 right-0 w-2.5 h-2.5 border-b border-r border-transparent group-hover:border-orange-500 z-30 transition-all duration-300"></div>
+
+  <!-- Left Edge Glowing Cyber Tab Indicator (expands on hover) -->
+  <div class="absolute left-0 top-1/2 -translate-y-1/2 w-[1.5px] h-0 bg-orange-500 group-hover:h-12 z-30 transition-all duration-300 ease-out"></div>
   
   <!-- Image Frame -->
   <div class="relative w-full aspect-[4/3] overflow-hidden border-b border-zinc-800/30">
