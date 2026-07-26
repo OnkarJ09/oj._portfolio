@@ -36,6 +36,8 @@ const { src = "/me1.png", alt = "Interactive Halftone Portrait" } = Astro.props;
     vy: number;
     ease: number;
     friction: number;
+    active: boolean;
+    blendRatio: number;
 
     constructor(x: number, y: number, gray: number, size: number) {
       this.originX = x;
@@ -47,42 +49,26 @@ const { src = "/me1.png", alt = "Interactive Halftone Portrait" } = Astro.props;
       this.vx = 0;
       this.vy = 0;
       this.ease = 0.12 + Math.random() * 0.04;
-      this.friction = 0.85;
-    }
-
-    draw(ctx: CanvasRenderingContext2D, isHovered: boolean, mouseX: number, mouseY: number) {
-      const brightness = this.gray / 255;
-      // Adjusted maxRadius to 0.36 to make the circular dots extremely tiny and dust-like
-      const maxRadius = this.size * 0.36;
-      
-      const radius = maxRadius * brightness * 1.1;
-      if (radius < 0.15) return; // Skip drawing extremely small particles
-
-      // Crisp silver-white digital particle color
-      let colorStr = `rgba(235, 235, 240, ${0.4 + brightness * 0.5})`;
-      
-      if (isHovered) {
-        const dx = mouseX - this.x;
-        const dy = mouseY - this.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        const activeRadius = 45;
-        
-        if (dist < activeRadius) {
-          const blendRatio = (activeRadius - dist) / activeRadius;
-          const nr = Math.round(235 * (1 - blendRatio) + 251 * blendRatio);
-          const ng = Math.round(235 * (1 - blendRatio) + 152 * blendRatio);
-          const nb = Math.round(240 * (1 - blendRatio) + 40 * blendRatio);
-          colorStr = `rgba(${nr}, ${ng}, ${nb}, ${0.5 + brightness * 0.5})`;
-        }
-      }
-
-      ctx.fillStyle = colorStr;
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, radius, 0, Math.PI * 2);
-      ctx.fill();
+      this.friction = 0.82;
+      this.active = true;
+      this.blendRatio = 0;
     }
 
     update(mouseX: number, mouseY: number, isHovered: boolean) {
+      // OPTIMIZATION: Bypasses particle math completely if the mouse is not hovered
+      // and the particle has fully snapped back to its origin.
+      if (!isHovered && Math.abs(this.vx) < 0.005 && Math.abs(this.vy) < 0.005 && Math.abs(this.x - this.originX) < 0.05 && Math.abs(this.y - this.originY) < 0.05) {
+        this.x = this.originX;
+        this.y = this.originY;
+        this.vx = 0;
+        this.vy = 0;
+        this.blendRatio = 0;
+        this.active = false;
+        return;
+      }
+
+      this.active = true;
+
       const dx = this.originX - this.x;
       const dy = this.originY - this.y;
       this.vx += dx * this.ease;
@@ -97,10 +83,15 @@ const { src = "/me1.png", alt = "Interactive Halftone Portrait" } = Astro.props;
         if (dist < radius) {
           const force = (radius - dist) / radius;
           const angle = Math.atan2(mdy, mdx);
-          const push = force * 4.0; // Dynamic push force balanced for tiny particle grid
+          const push = force * 4.2;
           this.vx += Math.cos(angle) * push;
           this.vy += Math.sin(angle) * push;
+          this.blendRatio = force; // Store proximity ratio for color highlights
+        } else {
+          this.blendRatio = 0;
         }
+      } else {
+        this.blendRatio = 0;
       }
 
       this.vx *= this.friction;
@@ -136,7 +127,8 @@ const { src = "/me1.png", alt = "Interactive Halftone Portrait" } = Astro.props;
       ctx.scale(dpr, dpr);
 
       const bufferCanvas = document.createElement("canvas");
-      const gridWidth = 180; // High resolution column count for tiny particle density
+      // OPTIMIZATION: Increased columns to 240 for extremely fine stardust resolution
+      const gridWidth = 240; 
       const gridHeight = Math.round(gridWidth * (1120 / 928));
       bufferCanvas.width = gridWidth;
       bufferCanvas.height = gridHeight;
@@ -163,14 +155,13 @@ const { src = "/me1.png", alt = "Interactive Halftone Portrait" } = Astro.props;
           const a = data[idx + 3];
 
           if (a > 30) {
-            // Apply steep contrast curves specifically to keep face details extremely sharp in tiny pixel grids
             let gray = 0.299 * r + 0.587 * g + 0.114 * b;
             
-            // Boost highlight clarity and clip low-contrast shadow noise
-            gray = (gray - 85) * 1.55 + 130; 
+            // Adjust threshold and curves so facial highlights are extremely sharp in tiny pixel grids
+            gray = (gray - 80) * 1.6 + 130; 
             gray = Math.max(0, Math.min(255, gray));
 
-            if (gray > 40) {
+            if (gray > 45) {
               particles.push(
                 new Particle(
                   x * scaleX + scaleX / 2,
@@ -230,13 +221,65 @@ const { src = "/me1.png", alt = "Interactive Halftone Portrait" } = Astro.props;
         isHovered = false;
       }, { passive: true });
 
+      // Instanced Drawing Setup (8 brightness levels + 8 hover highlights)
+      const numBuckets = 8;
+      
       const animate = () => {
         ctx.clearRect(0, 0, containerWidth, containerHeight);
         
+        // Initialize draw buckets to consolidate fill calls
+        const grayBuckets: Particle[][] = Array.from({ length: numBuckets }, () => []);
+        const hoverBuckets: Particle[][] = Array.from({ length: numBuckets }, () => []);
+
         for (let i = 0; i < particles.length; i++) {
           const p = particles[i];
           p.update(mouseX, mouseY, isHovered);
-          p.draw(ctx, isHovered, mouseX, mouseY);
+          
+          if (p.blendRatio > 0.05) {
+            const hIdx = Math.floor(p.blendRatio * (numBuckets - 1));
+            hoverBuckets[hIdx].push(p);
+          } else {
+            const bIdx = Math.floor((p.gray / 255) * (numBuckets - 1));
+            grayBuckets[bIdx].push(p);
+          }
+        }
+
+        // Draw Grayscale buckets (Consolidates up to 15,000 draw calls to 8 fill calls)
+        for (let b = 0; b < numBuckets; b++) {
+          const pList = grayBuckets[b];
+          if (pList.length === 0) continue;
+          
+          const brightness = b / (numBuckets - 1);
+          const alpha = 0.35 + brightness * 0.55;
+          ctx.fillStyle = `rgba(235, 235, 240, ${alpha})`;
+          
+          ctx.beginPath();
+          for (let i = 0; i < pList.length; i++) {
+            const p = pList[i];
+            const radius = p.size * 0.28 * (p.gray / 255) * 1.1;
+            ctx.rect(p.x - radius, p.y - radius, radius * 2, radius * 2);
+          }
+          ctx.fill();
+        }
+
+        // Draw Hover buckets (Consolidates hover highlights to 8 fill calls)
+        for (let b = 0; b < numBuckets; b++) {
+          const pList = hoverBuckets[b];
+          if (pList.length === 0) continue;
+          
+          const blendRatio = b / (numBuckets - 1);
+          const nr = Math.round(235 * (1 - blendRatio) + 251 * blendRatio);
+          const ng = Math.round(235 * (1 - blendRatio) + 152 * blendRatio);
+          const nb = Math.round(240 * (1 - blendRatio) + 40 * blendRatio);
+          ctx.fillStyle = `rgba(${nr}, ${ng}, ${nb}, 0.85)`;
+          
+          ctx.beginPath();
+          for (let i = 0; i < pList.length; i++) {
+            const p = pList[i];
+            const radius = p.size * 0.28 * (p.gray / 255) * 1.1;
+            ctx.rect(p.x - radius, p.y - radius, radius * 2, radius * 2);
+          }
+          ctx.fill();
         }
         
         requestAnimationFrame(animate);
