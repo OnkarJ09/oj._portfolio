@@ -180,7 +180,32 @@ const { title = "Perspective Grid" } = Astro.props;
     });
   }
 
+  function initScrollReveal() {
+    const reveals = document.querySelectorAll('.reveal-on-scroll');
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.05,
+      rootMargin: "0px 0px -50px 0px"
+    });
+
+    reveals.forEach((el) => {
+      observer.observe(el);
+    });
+  }
+
+  function initPage() {
+    initAsciiRipple();
+    initScrollReveal();
+  }
+
   // Run on page load and astro page swap transitions
-  initAsciiRipple();
-  document.addEventListener("astro:after-swap", initAsciiRipple);
+  initPage();
+  document.addEventListener("astro:after-swap", initPage);
 </script>

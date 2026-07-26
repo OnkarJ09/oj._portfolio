@@ -78,9 +78,9 @@ const services = [
 <Layout title="Onkar Joshi - AI & VLSI Developer Portfolio">
   
   <!-- Hero Section (Removed top padding pt-3 to pt-0 and added negative margin -mt-10 to pull it further upwards directly under the header navbar) -->
-  <section class="w-full max-w-7xl mx-auto px-6 pt-0 -mt-10 pb-24 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10 pointer-events-auto">
+  <section class="w-full max-w-[85rem] mx-auto px-6 pt-0 -mt-10 pb-24 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10 pointer-events-auto">
     <!-- Left Column -->
-    <div class="lg:col-span-6 flex flex-col items-start font-['Chakra_Petch',sans-serif] justify-center">
+    <div class="lg:col-span-5 flex flex-col items-start font-['Chakra_Petch',sans-serif] justify-center reveal-on-scroll">
       <!-- Status Badge -->
       <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-zinc-950/60 border border-zinc-800 text-[9px] font-bold tracking-[0.2em] text-orange-400 mb-6 uppercase">
         <span class="w-1.5 h-1.5 bg-orange-500 rounded-full animate-ping"></span>
@@ -115,15 +115,15 @@ const services = [
     </div>
 
     <!-- Right Profile Photo -->
-    <div class="lg:col-span-6 w-full flex justify-center lg:justify-end items-center">
-      <div class="w-full max-w-[560px] flex justify-center lg:justify-end">
+    <div class="lg:col-span-7 w-full flex justify-center lg:justify-end items-center reveal-on-scroll reveal-delay-150">
+      <div class="w-full max-w-[740px] flex justify-center lg:justify-end">
         <InteractivePhoto src="/me2.webp" alt="Onkar Joshi Portrait" />
       </div>
     </div>
   </section>
 
   <!-- Selected Work Grid -->
-  <section class="w-full max-w-6xl mx-auto px-6 py-24 border-t border-zinc-800/10 relative z-10 pointer-events-auto">
+  <section class="w-full max-w-6xl mx-auto px-6 py-24 border-t border-zinc-800/10 relative z-10 pointer-events-auto reveal-on-scroll">
     <div class="flex flex-col md:flex-row items-start md:items-end justify-between gap-6 mb-16 font-['Chakra_Petch',sans-serif]">
       <div>
         <span class="text-[9px] font-bold tracking-[0.25em] text-zinc-500 uppercase">SELECTED WORK</span>
@@ -134,21 +134,73 @@ const services = [
       </p>
     </div>
 
-    <!-- Projects Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-      {featuredProjects.map((p) => (
-        <ProjectCard 
-          title={p.title} 
-          category={p.category} 
-          description={p.description} 
-          imageSrc={p.imageSrc} 
-          link={p.link} 
-        />
-      ))}
+    <!-- Perspective 3D Carousel Section -->
+    <div class="relative w-full overflow-visible py-8 z-20 pointer-events-auto select-none reveal-on-scroll reveal-delay-150" id="projects-carousel-container">
+      <!-- Carousel Viewport -->
+      <div class="relative w-full h-[530px] overflow-hidden" style="perspective: 1200px;">
+        <!-- Slides Track -->
+        <div 
+          id="carousel-track" 
+          class="relative w-full h-full"
+          style="transform-style: preserve-3d;"
+        >
+          {featuredProjects.map((p, idx) => (
+            <div 
+              class="carousel-slide"
+              data-index={idx}
+              style="transform-style: preserve-3d; perspective: 1200px;"
+            >
+              <ProjectCard 
+                title={p.title} 
+                category={p.category} 
+                description={p.description} 
+                imageSrc={p.imageSrc} 
+                link={p.link} 
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Carousel Controls (Cyberpunk Theme) -->
+      <div class="flex items-center justify-center gap-6 mt-6 font-['Chakra_Petch',sans-serif]">
+        <!-- Left Button -->
+        <button 
+          id="carousel-prev-btn" 
+          class="inline-flex size-10 items-center justify-center rounded bg-zinc-950/80 border border-zinc-800 hover:border-orange-500/40 hover:text-orange-400 text-zinc-400 transition-colors focus:outline-none cursor-pointer"
+          aria-label="Previous Project"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7"></path>
+          </svg>
+        </button>
+
+        <!-- Dots Indicators -->
+        <div id="carousel-dots" class="flex items-center justify-center gap-2.5">
+          {featuredProjects.map((_, idx) => (
+            <button 
+              class="carousel-dot h-1.5 rounded transition-all duration-300 cursor-pointer"
+              data-index={idx}
+              aria-label={`Go to slide ${idx + 1}`}
+            />
+          ))}
+        </div>
+
+        <!-- Right Button -->
+        <button 
+          id="carousel-next-btn" 
+          class="inline-flex size-10 items-center justify-center rounded bg-zinc-950/80 border border-zinc-800 hover:border-orange-500/40 hover:text-orange-400 text-zinc-400 transition-colors focus:outline-none cursor-pointer"
+          aria-label="Next Project"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"></path>
+          </svg>
+        </button>
+      </div>
     </div>
 
     <!-- Bottom link -->
-    <div class="flex justify-center mt-12">
+    <div class="flex justify-center mt-12 reveal-on-scroll">
       <a 
         href="/works" 
         class="inline-flex items-center gap-2 text-zinc-450 hover:text-white text-xs font-bold tracking-widest transition-colors duration-300"
@@ -162,7 +214,7 @@ const services = [
   </section>
 
   <!-- About Overview & Principles Grid -->
-  <section class="w-full max-w-6xl mx-auto px-6 py-24 border-t border-zinc-800/10 relative z-10 pointer-events-auto font-['Chakra_Petch',sans-serif]">
+  <section class="w-full max-w-6xl mx-auto px-6 py-24 border-t border-zinc-800/10 relative z-10 pointer-events-auto font-['Chakra_Petch',sans-serif] reveal-on-scroll">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start mb-16">
       <div class="lg:col-span-5">
         <span class="text-[9px] font-bold tracking-[0.25em] text-zinc-500 uppercase">ABOUT ME</span>
@@ -177,8 +229,11 @@ const services = [
 
     <!-- Principles Cards -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-      {principles.map((pr) => (
-        <div class="p-6 border border-zinc-800 bg-[#07070b] shadow-[0_8px_24px_rgba(0,0,0,0.65)] rounded group hover:border-orange-500/25 transition-all duration-300">
+      {principles.map((pr, idx) => (
+        <div 
+          class="p-6 border border-zinc-800 bg-[#07070b] shadow-[0_8px_24px_rgba(0,0,0,0.65)] rounded group hover:border-orange-500/25 transition-all duration-300 reveal-on-scroll"
+          style={`transition-delay: ${idx * 100}ms;`}
+        >
           <div class="flex items-center gap-3 mb-4 select-none">
             <span class="text-[10px] font-mono text-orange-500">{pr.num}</span>
             <span class="text-[9px] font-bold tracking-widest text-zinc-400 group-hover:text-white transition-colors">{pr.name}</span>
@@ -192,7 +247,7 @@ const services = [
   </section>
 
   <!-- Process Workflow -->
-  <section class="w-full max-w-6xl mx-auto px-6 py-24 border-t border-zinc-800/10 relative z-10 pointer-events-auto">
+  <section class="w-full max-w-6xl mx-auto px-6 py-24 border-t border-zinc-800/10 relative z-10 pointer-events-auto reveal-on-scroll">
     <div class="flex flex-col md:flex-row items-start md:items-end justify-between gap-6 mb-16 font-['Chakra_Petch',sans-serif]">
       <div>
         <span class="text-[9px] font-bold tracking-[0.25em] text-zinc-500 uppercase">CREATIVE WORKFLOW</span>
@@ -203,11 +258,13 @@ const services = [
       </p>
     </div>
 
-    <ProcessPhases />
+    <div class="reveal-on-scroll reveal-delay-150">
+      <ProcessPhases />
+    </div>
   </section>
 
   <!-- Services Grid -->
-  <section class="w-full max-w-6xl mx-auto px-6 py-24 border-t border-zinc-800/10 relative z-10 pointer-events-auto font-['Chakra_Petch',sans-serif]">
+  <section class="w-full max-w-6xl mx-auto px-6 py-24 border-t border-zinc-800/10 relative z-10 pointer-events-auto font-['Chakra_Petch',sans-serif] reveal-on-scroll">
     <div class="flex flex-col md:flex-row items-start md:items-end justify-between gap-6 mb-16">
       <div>
         <span class="text-[9px] font-bold tracking-[0.25em] text-zinc-500 uppercase">WHAT I CREATE</span>
@@ -220,8 +277,11 @@ const services = [
 
     <!-- Core Services Layout -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-      {services.map((s) => (
-        <div class="p-6 md:p-8 border border-zinc-800 bg-[#07070b] shadow-[0_12px_32px_rgba(0,0,0,0.65)] rounded-lg hover:border-orange-500/25 group transition-all duration-300">
+      {services.map((s, idx) => (
+        <div 
+          class="p-6 md:p-8 border border-zinc-800 bg-[#07070b] shadow-[0_12px_32px_rgba(0,0,0,0.65)] rounded-lg hover:border-orange-500/25 group transition-all duration-300 reveal-on-scroll"
+          style={`transition-delay: ${idx * 150}ms;`}
+        >
           <div class="flex items-center justify-between gap-4 mb-4 select-none">
             <h3 class="font-['Orbitron',sans-serif] text-sm md:text-base font-extrabold text-white tracking-wider group-hover:text-orange-400 transition-colors flex items-center gap-3">
               <img src={s.icon} alt={s.name} class="w-5 h-5 object-contain invert brightness-90 group-hover:brightness-100 transition-all" />
@@ -233,7 +293,7 @@ const services = [
           </p>
           <div class="flex flex-wrap gap-2">
             {s.tags.map((tag) => (
-              <span class="text-[9px] border border-zinc-850 px-2.5 py-1 rounded bg-[#121218] text-zinc-400 group-hover:border-zinc-800 transition-colors">
+              <span class="text-[9px] border border-zinc-850 px-2.5 py-1 rounded bg-[#121218] text-zinc-400 group-hover:border-zinc-800 transition-colors font-mono">
                 {tag}
               </span>
             ))}
@@ -244,7 +304,7 @@ const services = [
   </section>
 
   <!-- FAQ Section -->
-  <section class="w-full max-w-6xl mx-auto px-6 py-24 border-t border-zinc-800/10 relative z-10 pointer-events-auto">
+  <section class="w-full max-w-6xl mx-auto px-6 py-24 border-t border-zinc-800/10 relative z-10 pointer-events-auto reveal-on-scroll">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
       <!-- Label columns -->
       <div class="lg:col-span-4 font-['Chakra_Petch',sans-serif]">
@@ -256,7 +316,7 @@ const services = [
       </div>
 
       <!-- FAQ Accordion -->
-      <div class="lg:col-span-8">
+      <div class="lg:col-span-8 reveal-on-scroll reveal-delay-150">
         <FAQAccordion />
       </div>
     </div>
@@ -283,6 +343,35 @@ const services = [
   #hero-flip-text.flip-in {
     transform: rotateX(90deg);
     opacity: 0;
+  }
+
+  /* 3D Carousel Styles */
+  #projects-carousel-container {
+    --slide-width: 500px;
+    --slide-spacing: 240px;
+  }
+  @media (max-w: 768px) {
+    #projects-carousel-container {
+      --slide-width: 400px;
+      --slide-spacing: 180px;
+    }
+  }
+  @media (max-w: 480px) {
+    #projects-carousel-container {
+      --slide-width: 310px;
+      --slide-spacing: 120px;
+    }
+  }
+  
+  .carousel-slide {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: var(--slide-width);
+    transform-style: preserve-3d;
+    will-change: transform, opacity;
+    transition: transform 700ms cubic-bezier(0.25, 1, 0.5, 1), 
+                opacity 700ms cubic-bezier(0.25, 1, 0.5, 1);
   }
 </style>
 
@@ -320,7 +409,155 @@ const services = [
     }, 4000);
   }
 
+  function setupCarousel() {
+    const container = document.getElementById("projects-carousel-container");
+    const track = document.getElementById("carousel-track");
+    const prevBtn = document.getElementById("carousel-prev-btn");
+    const nextBtn = document.getElementById("carousel-next-btn");
+    const dots = document.querySelectorAll(".carousel-dot");
+    const slides = document.querySelectorAll(".carousel-slide");
+    
+    if (!container || !track || !slides.length) return;
+
+    let currentIndex = 0;
+    const maxIndex = slides.length - 1;
+
+    function updateCarousel() {
+      const spacing = parseFloat(getComputedStyle(container!).getPropertyValue("--slide-spacing"));
+
+      slides.forEach((slide, idx) => {
+        const diff = idx - currentIndex;
+        const isActive = idx === currentIndex;
+
+        const rotateY = diff * -32; // perspective rotation step
+        const scale = isActive ? 1.02 : 0.8;
+        const translateZ = isActive ? 0 : -220; // push inactive slides back
+        const translateX = diff * spacing;
+
+        (slide as HTMLElement).style.transform = `translate3d(calc(-50% + ${translateX}px), -50%, ${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`;
+        (slide as HTMLElement).style.opacity = isActive ? "1" : (Math.abs(diff) === 1 ? "0.38" : "0.08");
+        (slide as HTMLElement).style.pointerEvents = isActive ? "auto" : "none";
+        (slide as HTMLElement).style.zIndex = isActive ? "10" : `${5 - Math.abs(diff)}`;
+      });
+
+      dots.forEach((dot, idx) => {
+        if (idx === currentIndex) {
+          dot.classList.add("w-8", "bg-orange-500", "opacity-100");
+          dot.classList.remove("w-2.5", "bg-zinc-700", "opacity-30");
+        } else {
+          dot.classList.remove("w-8", "bg-orange-500", "opacity-100");
+          dot.classList.add("w-2.5", "bg-zinc-700", "opacity-30");
+        }
+      });
+    }
+
+    function slidePrev() {
+      currentIndex = currentIndex > 0 ? currentIndex - 1 : maxIndex;
+      updateCarousel();
+    }
+
+    function slideNext() {
+      currentIndex = currentIndex < maxIndex ? currentIndex + 1 : 0;
+      updateCarousel();
+    }
+
+    // Remove existing event listeners by cloning button elements if needed
+    prevBtn?.replaceWith(prevBtn.cloneNode(true));
+    nextBtn?.replaceWith(nextBtn.cloneNode(true));
+
+    const newPrevBtn = document.getElementById("carousel-prev-btn");
+    const newNextBtn = document.getElementById("carousel-next-btn");
+
+    newPrevBtn?.addEventListener("click", slidePrev);
+    newNextBtn?.addEventListener("click", slideNext);
+
+    dots.forEach((dot, idx) => {
+      const clone = dot.cloneNode(true);
+      dot.replaceWith(clone);
+      clone.addEventListener("click", () => {
+        currentIndex = idx;
+        updateCarousel();
+      });
+    });
+
+    // Touch Swipe Navigation
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    container.addEventListener("touchstart", (e: TouchEvent) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    container.addEventListener("touchend", (e: TouchEvent) => {
+      touchEndX = e.changedTouches[0].screenX;
+      const swipeDistance = touchEndX - touchStartX;
+      if (swipeDistance > 55) {
+        slidePrev();
+      } else if (swipeDistance < -55) {
+        slideNext();
+      }
+    }, { passive: true });
+
+    // Wheel Scroll Navigation (Horizontal Swiping Only)
+    let lastWheelTime = 0;
+    container.addEventListener("wheel", (e: WheelEvent) => {
+      // Only trigger slide transitions for horizontal swipes (deltaX), keeping vertical page scroll intact
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY) && Math.abs(e.deltaX) > 10) {
+        e.preventDefault();
+        const now = Date.now();
+        if (now - lastWheelTime < 600) return;
+
+        if (e.deltaX > 0) {
+          slideNext();
+        } else {
+          slidePrev();
+        }
+        lastWheelTime = now;
+      }
+    }, { passive: false });
+
+    // Clean up any existing scroll sync listener
+    if ((window as any)._carouselScrollListener) {
+      window.removeEventListener("scroll", (window as any)._carouselScrollListener);
+    }
+
+    const scrollListener = () => {
+      const containerRect = container.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+
+      // Track the center of the carousel container relative to the viewport center
+      const containerCenter = containerRect.top + containerRect.height / 2;
+      const startY = viewportHeight * 0.85;
+      const endY = viewportHeight * 0.15;
+      const distanceRange = startY - endY;
+
+      // Calculate ratio based on container center position
+      const offset = startY - containerCenter;
+      const ratio = Math.max(0, Math.min(0.99, offset / distanceRange));
+
+      const targetIndex = Math.floor(ratio * slides.length);
+      if (targetIndex !== currentIndex && targetIndex >= 0 && targetIndex <= maxIndex) {
+        currentIndex = targetIndex;
+        updateCarousel();
+      }
+    };
+
+    window.addEventListener("scroll", scrollListener, { passive: true });
+    (window as any)._carouselScrollListener = scrollListener;
+
+    // Handle Window Resize
+    window.addEventListener("resize", updateCarousel);
+
+    // Initial load state
+    updateCarousel();
+  }
+
+  function initPage() {
+    setupFlipText();
+    setupCarousel();
+  }
+
   // Run on page load and astro page swap transitions
-  setupFlipText();
-  document.addEventListener("astro:after-swap", setupFlipText);
+  initPage();
+  document.addEventListener("astro:after-swap", initPage);
 </script>
