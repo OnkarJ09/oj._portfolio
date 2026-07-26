@@ -4,121 +4,112 @@ import ProjectCard from '../components/ProjectCard.astro';
 
 const allProjects = [
   {
-    title: "BRANDORA",
-    category: "BRAND DESIGN",
-    type: "business",
-    description: "A comprehensive brand styling visual system designed for developer tooling platforms.",
-    imageSrc: "/brandora.png",
-    link: "https://brandora.studio",
-    status: "ACTIVE"
-  },
-  {
-    title: "NIVORA",
-    category: "WEB DESIGN",
-    type: "ai",
-    description: "High-performance, cinematic visual landing page representing artificial intelligence interfaces.",
+    title: "VLSI Fault Detection Assistant",
+    category: "AI & HARDWARE",
+    type: "systems",
+    description: "AI-powered VLSI diagnostics assistant combining Astro + React frontend with a FastAPI backend and RAG pipeline using FAISS.",
     imageSrc: "/nivora.png",
-    link: "https://nivora.studio",
+    link: "https://github.com/OnkarJ09",
     status: "ACTIVE"
   },
   {
-    title: "CODIFY",
-    category: "DEVELOPMENT",
-    type: "one-page",
-    description: "A fast, modular Astro component library styled specifically with carbon wireframe aesthetics.",
+    title: "Qwen 2.5 Chatbot",
+    category: "AI CHATBOT",
+    type: "ai-ml",
+    description: "Local offline conversational AI chatbot powered by the Qwen 2.5 language model running through Ollama and Streamlit.",
     imageSrc: "/codify.png",
-    link: "https://codify.pro",
-    status: "STABLE"
+    link: "https://github.com/OnkarJ09",
+    status: "COMPLETED"
   },
   {
-    title: "NEUTRA",
-    category: "VISUAL SYSTEM",
-    type: "business",
-    description: "Interactive dashboard system showcasing data metrics inside a glassmorphic radar module.",
-    imageSrc: "/neutra.png",
-    link: "https://neutra.studio",
-    status: "DEPLOYED"
-  },
-  {
-    title: "AI NEST",
-    category: "CREATIVE",
-    type: "ai",
-    description: "Generative art composition displaying spatial intelligence models and dynamic physics calculations.",
+    title: "RAG Prototypes",
+    category: "AI RESEARCH",
+    type: "ai-ml",
+    description: "RAG prototypes exploring document indexing, semantic search, and context-aware QA using FAISS and Hugging Face models.",
     imageSrc: "/ainest.png",
-    link: "https://ainest.io",
-    status: "ARCHIVE"
-  },
-  {
-    title: "STUDYFLOW",
-    category: "INTERFACES",
-    type: "portfolio",
-    description: "A futuristic productivity workflow management layout built for collaborative developer teams.",
-    imageSrc: "/studyflow.png",
-    link: "https://studyflow.com",
+    link: "https://github.com/OnkarJ09",
     status: "COMPLETED"
   },
   {
-    title: "TODOFUSION",
-    category: "INTERFACES",
-    type: "one-page",
-    description: "Compact task management overlay featuring custom notification badges and retro grid blocks.",
+    title: "Vedas.ai",
+    category: "AI ASSISTANT",
+    type: "ai-ml",
+    description: "Intelligent AI virtual assistant capable of automating everyday tasks using text/voice commands, speech recognition, and TTS.",
+    imageSrc: "/brandora.png",
+    link: "https://github.com/OnkarJ09",
+    status: "ACTIVE"
+  },
+  {
+    title: "All App Opener",
+    category: "AUTOMATION TOOL",
+    type: "automation",
+    description: "Cross-platform Python package that opens, closes, and manages desktop applications using only their names.",
     imageSrc: "/todofusion.png",
-    link: "https://todofusion.io",
-    status: "COMPLETED"
-  },
-  {
-    title: "SNAPKIT",
-    category: "DEVELOPMENT",
-    type: "business",
-    description: "Holographic photography capture component dashboard displaying aperture and shutter rates.",
-    imageSrc: "/snapkit.png",
-    link: "https://snapkit.co",
+    link: "https://github.com/OnkarJ09",
     status: "STABLE"
   },
   {
-    title: "GRIDO",
-    category: "VISUAL SYSTEM",
-    type: "portfolio",
-    description: "Responsive bento grid portfolio layout featuring customizable dark CSS tokens.",
-    imageSrc: "/grido.png",
-    link: "https://girdo.studio",
-    status: "DEPLOYED"
-  },
-  {
-    title: "TRAINLY",
-    category: "DEVELOPMENT",
-    type: "business",
-    description: "Futuristic interactive education platform presenting 3D physics modules and progress counters.",
-    imageSrc: "/trainly.png",
-    link: "https://trainly.com",
+    title: "Auto Bug Fixer",
+    category: "AI UTILITY",
+    type: "ai-ml",
+    description: "AI-powered terminal utility that identifies, analyzes, and suggests fixes for programming errors across multiple languages.",
+    imageSrc: "/snapkit.png",
+    link: "https://github.com/OnkarJ09",
     status: "COMPLETED"
   },
   {
-    title: "STICKIFY",
-    category: "CREATIVE",
-    type: "one-page",
-    description: "An online graphics library styled with neon terminal highlights and custom shapes.",
-    imageSrc: "/stickify.png",
-    link: "https://stickify.pro",
-    status: "ARCHIVE"
+    title: "Translator API",
+    category: "API DEV",
+    type: "web-dev",
+    description: "Lightweight translation API that provides multilingual translation functionality simple to integrate into pipelines.",
+    imageSrc: "/neutra.png",
+    link: "https://github.com/OnkarJ09",
+    status: "STABLE"
   },
   {
-    title: "LANDIFY",
-    category: "WEB DESIGN",
-    type: "portfolio",
-    description: "Futuristic landing page theme displaying cinematic layout transitions and floating indicators.",
+    title: "Pass Pin Generator",
+    category: "UTILITY",
+    type: "automation",
+    description: "Password and PIN generation utility capable of creating secure, random credentials with configurable complexity.",
+    imageSrc: "/grido.png",
+    link: "https://github.com/OnkarJ09",
+    status: "COMPLETED"
+  },
+  {
+    title: "Smart College Attendance",
+    category: "SYSTEMS",
+    type: "systems",
+    description: "Command-line student attendance and record management system written in C for maintaining academic records.",
+    imageSrc: "/trainly.png",
+    link: "https://github.com/OnkarJ09",
+    status: "COMPLETED"
+  },
+  {
+    title: "Weather App",
+    category: "API DEV",
+    type: "web-dev",
+    description: "Weather information application retrieving and displaying real-time weather details for specified cities.",
     imageSrc: "/landify.png",
-    link: "https://landify.com",
-    status: "ACTIVE"
+    link: "https://github.com/OnkarJ09",
+    status: "COMPLETED"
+  },
+  {
+    title: "Greet User",
+    category: "UTILITY",
+    type: "automation",
+    description: "Python utility generating time-based greetings according to the system clock with conditional logical triggers.",
+    imageSrc: "/stickify.png",
+    link: "https://github.com/OnkarJ09",
+    status: "COMPLETED"
   }
 ];
 
 const filters = [
   { id: "all", name: "ALL PROJECTS" },
-  { id: "ai", name: "AI" },
-  { id: "business", name: "BUSINESS" },
-  { id: "one-page", name: "ONE PAGE" },
-  { id: "portfolio", name: "PORTFOLIO" }
+  { id: "ai-ml", name: "AI & ML" },
+  { id: "web-dev", name: "WEB DEV" },
+  { id: "automation", name: "AUTOMATION" },
+  { id: "systems", name: "SYSTEMS" }
 ];
 ---
 

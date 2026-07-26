@@ -7,96 +7,96 @@ import FAQAccordion from '../components/FAQAccordion.astro';
 
 const featuredProjects = [
   {
-    title: "BRANDORA",
-    category: "BRAND DESIGN",
-    description: "A comprehensive brand styling visual system designed for developer tooling platforms.",
-    imageSrc: "/brandora.png",
-    link: "https://brandora.studio"
-  },
-  {
-    title: "NIVORA",
-    category: "WEB DESIGN",
-    description: "High-performance, cinematic visual landing page representing artificial intelligence interfaces.",
+    title: "VLSI Fault Detection Assistant",
+    category: "AI & SYSTEMS",
+    description: "An AI-powered VLSI diagnostics assistant using Astro + React, FastAPI, and RAG pipelines.",
     imageSrc: "/nivora.png",
-    link: "https://nivora.studio"
+    link: "https://github.com/OnkarJ09"
   },
   {
-    title: "CODIFY",
-    category: "DEVELOPMENT",
-    description: "A fast, modular Astro component library styled specifically with carbon wireframe aesthetics.",
+    title: "Vedas.ai",
+    category: "AI & AUTOMATION",
+    description: "An intelligent virtual assistant automating tasks through voice/text with speech recognition.",
+    imageSrc: "/ainest.png",
+    link: "https://github.com/OnkarJ09"
+  },
+  {
+    title: "Qwen 2.5 Chatbot",
+    category: "AI DEVELOPMENT",
+    description: "Local offline conversational AI chatbot powered by Qwen 2.5 running through Ollama.",
     imageSrc: "/codify.png",
-    link: "https://codify.pro"
+    link: "https://github.com/OnkarJ09"
   },
   {
-    title: "NEUTRA",
-    category: "VISUAL SYSTEM",
-    description: "Interactive dashboard system showcasing data metrics inside a glassmorphic radar module.",
-    imageSrc: "/neutra.png",
-    link: "https://neutra.studio"
+    title: "Auto Bug Fixer",
+    category: "AI UTILITY",
+    description: "AI-powered terminal tool capable of identifying, analyzing, and suggesting code fixes.",
+    imageSrc: "/todofusion.png",
+    link: "https://github.com/OnkarJ09"
   }
 ];
 
 const principles = [
-  { num: "01", name: "INTERFACE DESIGN", desc: "Clear interfaces with strong visual hierarchy built to perform." },
-  { num: "02", name: "SYSTEM THINKING", desc: "Scalable design patterns and components built for future growth." },
-  { num: "03", name: "FRAMER & CODE EXECUTION", desc: "Fast builds with polished micro-interactions and zero bloat." },
-  { num: "04", name: "VISUAL DIRECTION", desc: "Bold creative themes that make digital brands memorable worldwide." }
+  { num: "01", name: "INTELLIGENT SYSTEMS", desc: "Building scalable AI pipelines, RAG systems, and neural networks." },
+  { num: "02", name: "HARDWARE DIAGNOSTICS", desc: "Applying machine learning to VLSI engineering and diagnostics." },
+  { num: "03", name: "SYSTEM AUTOMATION", desc: "Automating workflows with Python, APIs, and CLI tooling." },
+  { num: "04", name: "FULL STACK FLOW", desc: "Crafting fast, clean web apps combining Astro, React, and FastAPI." }
 ];
 
 const services = [
   {
     num: "01",
-    name: "DESIGN",
-    desc: "Websites, landing pages, and product interfaces.",
-    icon: "/design_icon.png",
-    tags: ["UX Structure", "Visual Hierarchy", "Responsive Layouts", "Interaction-Ready"]
+    name: "AI & RAG SOLUTIONS",
+    desc: "Custom RAG pipelines, LLM fine-tuning, and conversational chatbot systems.",
+    icon: "/creative_icon.png",
+    tags: ["Retrieval-Augmented Gen", "LangChain", "Vector Databases", "Prompt Engineering"]
   },
   {
     num: "02",
-    name: "DEVELOPMENT",
-    desc: "Fast, responsive Astro and Framer builds ready to launch.",
+    name: "WEB DEVELOPMENT",
+    desc: "High-performance full stack web systems built to scale.",
     icon: "/dev_icon.png",
-    tags: ["Component Setup", "CMS Structure", "Smooth Interactions", "Performance-Ready"]
+    tags: ["Astro & React", "FastAPI Backends", "Database Systems", "Responsive UI"]
   },
   {
     num: "03",
-    name: "VISUAL SYSTEM",
-    desc: "Reusable styles, components, and interface rules.",
+    name: "SYSTEM AUTOMATION",
+    desc: "Automation utilities, custom APIs, script suites, and software packaging.",
     icon: "/sys_icon.png",
-    tags: ["Design Tokens", "UI Components", "Style Guidelines", "Consistent Layouts"]
+    tags: ["CLI Tooling", "Process Scripting", "API Development", "System Control"]
   },
   {
     num: "04",
-    name: "CREATIVE",
-    desc: "Strong concepts and visual systems for bold brands.",
-    icon: "/creative_icon.png",
-    tags: ["Art Direction", "Motion Ideas", "Brand Atmosphere", "Visual Storytelling"]
+    name: "VLSI TECHNOLOGY",
+    desc: "Intelligent analytics for VLSI diagnostics and fault detection.",
+    icon: "/design_icon.png",
+    tags: ["Diagnostics Assistant", "Fault Analysis", "Semiconductor Data", "Data-Driven Insights"]
   }
 ];
 
 const pricing = [
   {
-    plan: "STARTER",
-    desc: "For focused landing pages",
+    plan: "AUTOMATION",
+    desc: "For custom scripts & utilities",
+    price: "$400",
+    features: ["Custom automation script", "CLI terminal tool setup", "API integration", "Detailed documentation"]
+  },
+  {
+    plan: "INTELLIGENT WEB",
+    desc: "AI chatbot or web system",
     price: "$1,200",
-    features: ["Landing page build", "Responsive layout grid", "Basic micro-interactions", "Launch checklists support"]
+    features: ["Astro + React frontend", "FastAPI backend integration", "Ollama / LLM chatbot setup", "Responsive database schema"]
   },
   {
-    plan: "PRO",
-    desc: "Complete website system",
-    price: "$2,400",
-    features: ["Multi-page website", "Design system setup", "Modular CMS structure", "Advanced interactions", "SEO & Speed optimization"]
-  },
-  {
-    plan: "CUSTOM",
-    desc: "Advanced visual systems",
-    price: "$4,800",
-    features: ["Custom page structures", "Complex database CMS", "Motion direction & GSAP", "Full component libraries", "Ongoing technical support"]
+    plan: "ADVANCED AI / SYSTEMS",
+    desc: "Custom RAG & VLSI automation",
+    price: "$2,500",
+    features: ["Advanced RAG database", "Vector stores (FAISS)", "VLSI diagnostic scripts", "Ongoing tech integration support"]
   }
 ];
 ---
 
-<Layout title="Omnira - Creative Portfolio System">
+<Layout title="Onkar Joshi - AI & VLSI Developer Portfolio">
   
   <!-- Hero Section (Removed top padding pt-3 to pt-0 and added negative margin -mt-10 to pull it further upwards directly under the header navbar) -->
   <section class="w-full max-w-7xl mx-auto px-6 pt-0 -mt-10 pb-24 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10 pointer-events-auto">
@@ -110,12 +110,12 @@ const pricing = [
       
       <!-- Heading -->
       <h1 class="font-['Orbitron',sans-serif] text-3xl md:text-5xl font-black text-white leading-tight tracking-wider uppercase select-none mb-6">
-        DESIGN BEYOND THE <span class="bg-gradient-to-r from-orange-500 to-yellow-400 bg-clip-text text-transparent">SYSTEM</span>
+        AI INTEGRATION & <span class="bg-gradient-to-r from-orange-500 to-yellow-400 bg-clip-text text-transparent">VLSI TECH</span>
       </h1>
       
       <!-- Subheading -->
       <p class="text-zinc-400 text-xs md:text-sm font-normal tracking-wide leading-relaxed max-w-xl mb-8">
-        I design and build futuristic digital experiences with cinematic visuals, sharp layouts, and high-tech interactions. My work blends strategy, creativity, and clean execution to create portfolios that feel bold, immersive, and unforgettable.
+        I am Onkar Joshi, a technology developer specializing in Python, Artificial Intelligence (LLMs/RAG), Full Stack Web Development, and VLSI Design and Technology. I design intelligent software solutions and build high-tech digital systems.
       </p>
 
       <!-- CTA Links -->
@@ -138,7 +138,7 @@ const pricing = [
     <!-- Right Profile Photo -->
     <div class="lg:col-span-6 w-full flex justify-center lg:justify-end items-center">
       <div class="w-full max-w-[560px] flex justify-center lg:justify-end">
-        <InteractivePhoto src="/me2.png" alt="Creative Director Portrait" />
+        <InteractivePhoto src="/me2.png" alt="Onkar Joshi Portrait" />
       </div>
     </div>
   </section>
