@@ -1,0 +1,169 @@
+---
+import Layout from '../layouts/Layout.astro';
+import FAQAccordion from '../components/FAQAccordion.astro';
+---
+
+<Layout title="Contact - Omnira">
+  <main class="w-full max-w-6xl mx-auto px-6 py-16 md:py-24 relative z-10 pointer-events-auto font-['Chakra_Petch',sans-serif]">
+    <!-- Header banner -->
+    <div class="border-b border-zinc-800/20 pb-12 mb-16">
+      <span class="text-[9px] font-bold tracking-[0.25em] text-zinc-500 uppercase">SYS: CONTACT</span>
+      <h1 class="font-['Orbitron',sans-serif] text-2xl md:text-4xl font-extrabold text-white tracking-widest mt-2 uppercase">
+        CONTACT CHANNEL
+      </h1>
+      <p class="text-zinc-550 text-xs md:text-sm tracking-wide mt-4 max-w-xl leading-relaxed">
+        Send a few details about your project, and I’ll get back with a clear direction, scope, timeline, and practical next steps for building something sharp, focused, and ready to launch.
+      </p>
+    </div>
+
+    <!-- Contact Grid System -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-24">
+      
+      <!-- Left sidebar meta parameters -->
+      <div class="lg:col-span-4 flex flex-col gap-6 font-['Chakra_Petch',sans-serif]">
+        <!-- Status Box -->
+        <div class="p-6 border border-zinc-850 bg-zinc-950/15 rounded-lg">
+          <span class="text-[8px] font-bold tracking-widest text-zinc-500 block mb-2 uppercase">SIGNAL STATUS</span>
+          <div class="flex items-center justify-between">
+            <span class="text-xs text-white font-semibold">AVAILABLE FOR HIRE</span>
+            <span class="w-2.5 h-2.5 bg-emerald-500 rounded-full animate-pulse"></span>
+          </div>
+        </div>
+
+        <div class="p-6 border border-zinc-850 bg-zinc-950/15 rounded-lg flex flex-col gap-4">
+          <div>
+            <span class="text-[8px] font-bold tracking-widest text-zinc-550 block mb-1 uppercase">RESPONSE SPEED</span>
+            <span class="text-xs text-white font-semibold">WITHIN 24 HOURS</span>
+          </div>
+          <div>
+            <span class="text-[8px] font-bold tracking-widest text-zinc-550 block mb-1 uppercase">SIGNAL SECURITY</span>
+            <span class="text-xs text-white font-semibold">STRONG ENCRYPTION</span>
+          </div>
+        </div>
+
+        <div class="p-6 border border-zinc-850 bg-zinc-950/15 rounded-lg flex flex-col gap-4">
+          <div>
+            <span class="text-[8px] font-bold tracking-widest text-zinc-550 block mb-1 uppercase">EMAIL CHANNEL</span>
+            <a href="mailto:hello@omniro.studio" class="text-xs text-orange-400 font-semibold hover:text-white transition-colors">HELLO@OMNIRO.STUDIO</a>
+          </div>
+          <div>
+            <span class="text-[8px] font-bold tracking-widest text-zinc-550 block mb-1 uppercase">GEOGRAPHY</span>
+            <span class="text-xs text-white font-semibold">BERLIN, GERMANY</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Form (Right) -->
+      <div class="lg:col-span-8 p-6 md:p-8 border border-zinc-800/40 bg-zinc-950/10 rounded-lg relative">
+        <div class="absolute top-0 left-0 w-2.5 h-2.5 border-t border-l border-zinc-700 pointer-events-none"></div>
+        <div class="absolute top-0 right-0 w-2.5 h-2.5 border-t border-r border-zinc-700 pointer-events-none"></div>
+        <div class="absolute bottom-0 left-0 w-2.5 h-2.5 border-b border-l border-zinc-700 pointer-events-none"></div>
+        <div class="absolute bottom-0 right-0 w-2.5 h-2.5 border-b border-r border-zinc-700 pointer-events-none"></div>
+
+        <form class="flex flex-col gap-6" onsubmit="event.preventDefault(); alert('Transmission Received!');">
+          <!-- Name and email row -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="flex flex-col gap-2">
+              <label class="text-[9px] font-bold tracking-widest text-zinc-500 uppercase">YOUR NAME</label>
+              <input 
+                type="text" 
+                required 
+                placeholder="Jane Smith" 
+                class="w-full bg-[#121218] border border-zinc-800 focus:border-orange-500/50 text-xs text-white rounded px-4 py-3 font-mono tracking-wider focus:outline-none transition-colors"
+              />
+            </div>
+            <div class="flex flex-col gap-2">
+              <label class="text-[9px] font-bold tracking-widest text-zinc-500 uppercase">EMAIL ADDRESS</label>
+              <input 
+                type="email" 
+                required 
+                placeholder="Enter your email" 
+                class="w-full bg-[#121218] border border-zinc-800 focus:border-orange-500/50 text-xs text-white rounded px-4 py-3 font-mono tracking-wider focus:outline-none transition-colors"
+              />
+            </div>
+          </div>
+
+          <!-- Project Parameters row -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="flex flex-col gap-2">
+              <label class="text-[9px] font-bold tracking-widest text-zinc-500 uppercase">PROJECT TYPE</label>
+              <select 
+                class="w-full bg-[#121218] border border-zinc-800 focus:border-orange-500/50 text-xs text-white rounded px-4 py-3 tracking-wide focus:outline-none transition-colors cursor-pointer appearance-none"
+                style="background-image: url('data:image/svg+xml;utf8,<svg fill=%22%2371717a%22 height=%2224%22 viewBox=%220 0 24 24%22 width=%2224%22 xmlns=%22http://www.w3.org/2000/svg%22><path d=%22M7 10l5 5 5-5z%22/></svg>'); background-repeat: no-repeat; background-position: right 12px center;"
+              >
+                <option>Select...</option>
+                <option>WEB DESIGN & DEVELOPMENT</option>
+                <option>BRAND DESIGN SYSTEM</option>
+                <option>UX/UI PRODUCT SYSTEM</option>
+              </select>
+            </div>
+            
+            <div class="flex flex-col gap-2">
+              <label class="text-[9px] font-bold tracking-widest text-zinc-500 uppercase">BUDGET RANGE</label>
+              <select 
+                class="w-full bg-[#121218] border border-zinc-800 focus:border-orange-500/50 text-xs text-white rounded px-4 py-3 tracking-wide focus:outline-none transition-colors cursor-pointer appearance-none"
+                style="background-image: url('data:image/svg+xml;utf8,<svg fill=%22%2371717a%22 height=%2224%22 viewBox=%220 0 24 24%22 width=%2224%22 xmlns=%22http://www.w3.org/2000/svg%22><path d=%22M7 10l5 5 5-5z%22/></svg>'); background-repeat: no-repeat; background-position: right 12px center;"
+              >
+                <option>Select</option>
+                <option>&lt; $2,500</option>
+                <option>$2,500 - $5,000</option>
+                <option>$5,000 - $10,000</option>
+                <option>$10,000+</option>
+              </select>
+            </div>
+
+            <div class="flex flex-col gap-2">
+              <label class="text-[9px] font-bold tracking-widest text-zinc-500 uppercase">TIMELINE</label>
+              <select 
+                class="w-full bg-[#121218] border border-zinc-800 focus:border-orange-500/50 text-xs text-white rounded px-4 py-3 tracking-wide focus:outline-none transition-colors cursor-pointer appearance-none"
+                style="background-image: url('data:image/svg+xml;utf8,<svg fill=%22%2371717a%22 height=%2224%22 viewBox=%220 0 24 24%22 width=%2224%22 xmlns=%22http://www.w3.org/2000/svg%22><path d=%22M7 10l5 5 5-5z%22/></svg>'); background-repeat: no-repeat; background-position: right 12px center;"
+              >
+                <option>Select...</option>
+                <option>&lt; 2 weeks</option>
+                <option>2 - 4 weeks</option>
+                <option>1 - 2 months</option>
+                <option>Flexible</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Project Details -->
+          <div class="flex flex-col gap-2">
+            <label class="text-[9px] font-bold tracking-widest text-zinc-500 uppercase">PROJECT DETAILS</label>
+            <textarea 
+              required 
+              rows="5" 
+              placeholder="Tell me about your project, goals, and any details." 
+              class="w-full bg-[#121218] border border-zinc-800 focus:border-orange-500/50 text-xs text-white rounded px-4 py-3 focus:outline-none transition-colors leading-relaxed"
+            ></textarea>
+          </div>
+
+          <!-- Submit Button -->
+          <button 
+            type="submit" 
+            class="w-full mt-4 py-3.5 border border-orange-500/20 hover:border-orange-500/60 bg-orange-500/5 hover:bg-orange-500/10 text-orange-400 hover:text-white rounded text-[10px] font-bold tracking-widest transition-all duration-300"
+          >
+            SEND REQUEST
+          </button>
+        </form>
+      </div>
+
+    </div>
+
+    <!-- FAQ Accordion section -->
+    <div class="border-t border-zinc-800/20 pt-16">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+        <div class="lg:col-span-4">
+          <span class="text-[9px] font-bold tracking-[0.25em] text-zinc-500 uppercase">CLEAR ANSWERS</span>
+          <h2 class="font-['Orbitron',sans-serif] text-xl md:text-2xl font-extrabold text-white tracking-widest mt-1">PRE-BUILD FAQ</h2>
+          <p class="text-zinc-550 text-xs tracking-wide leading-relaxed mt-4 max-w-sm">
+            Everything you need to know about the process, timeline, Framer/Astro setup, and final project delivery.
+          </p>
+        </div>
+        <div class="lg:col-span-8">
+          <FAQAccordion />
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>

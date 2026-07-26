@@ -1,0 +1,60 @@
+---
+const phases = [
+  {
+    step: "01",
+    name: "STRATEGY",
+    title: "PHASE 01: DEFINE GOALS",
+    desc: "Define the goal, audience, visual direction, and project structure before moving into focused design."
+  },
+  {
+    step: "02",
+    name: "DESIGN",
+    title: "PHASE 02: HIGH-IMPACT CONCEPT",
+    desc: "Create high-impact interface concepts with strong hierarchy, futuristic detail, and responsiveness."
+  },
+  {
+    step: "03",
+    name: "DEVELOPMENT",
+    title: "PHASE 03: ASTRO BUILD",
+    desc: "Turn the approved direction into a clean high-performance code experience with interaction, motion, and precision."
+  },
+  {
+    step: "04",
+    name: "LAUNCH",
+    title: "PHASE 04: POLISH & OPTIMIZE",
+    desc: "Polish spacing, performance, responsiveness, and final details to make the experience launch ready."
+  }
+];
+---
+
+<div class="process-phases relative w-full font-['Chakra_Petch',sans-serif] select-none">
+  <!-- Connective cyber line -->
+  <div class="hidden lg:block absolute top-[40px] left-[5%] right-[5%] h-px bg-zinc-800/40 z-0"></div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative z-10">
+    {phases.map((p) => (
+      <div class="group relative p-6 border border-zinc-800/30 bg-zinc-950/10 hover:border-orange-500/20 backdrop-blur-sm rounded-lg transition-all duration-500">
+        <!-- Corner Markers -->
+        <div class="absolute top-0 left-0 w-2 h-2 border-t border-l border-zinc-800 pointer-events-none group-hover:border-orange-500/45 transition-colors"></div>
+        <div class="absolute top-0 right-0 w-2 h-2 border-t border-r border-zinc-800 pointer-events-none group-hover:border-orange-500/45 transition-colors"></div>
+        <div class="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-zinc-800 pointer-events-none group-hover:border-orange-500/45 transition-colors"></div>
+        <div class="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-zinc-800 pointer-events-none group-hover:border-orange-500/45 transition-colors"></div>
+
+        <!-- Node Circle & Number -->
+        <div class="flex items-center justify-between mb-6">
+          <div class="flex items-center justify-center w-9 h-9 rounded bg-[#121218] border border-zinc-800 group-hover:border-orange-500/30 transition-colors">
+            <span class="text-xs font-mono font-bold text-zinc-400 group-hover:text-orange-400 transition-colors">{p.step}</span>
+          </div>
+          <span class="text-[9px] font-bold tracking-[0.2em] text-zinc-500 group-hover:text-orange-400/80 transition-colors">{p.name}</span>
+        </div>
+
+        <h4 class="font-['Orbitron',sans-serif] text-xs font-bold tracking-wider text-zinc-350 mb-3 group-hover:text-white transition-colors">
+          {p.title}
+        </h4>
+        <p class="text-zinc-500 text-xs leading-relaxed font-normal tracking-wide">
+          {p.desc}
+        </p>
+      </div>
+    ))}
+  </div>
+</div>

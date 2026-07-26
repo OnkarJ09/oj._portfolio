@@ -1,7 +1,331 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import InteractivePhoto from '../components/InteractivePhoto.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import ProcessPhases from '../components/ProcessPhases.astro';
+import FAQAccordion from '../components/FAQAccordion.astro';
+
+const featuredProjects = [
+  {
+    title: "BRANDORA",
+    category: "BRAND DESIGN",
+    description: "A comprehensive brand styling visual system designed for developer tooling platforms.",
+    imageSrc: "/brandora.png",
+    link: "https://brandora.studio"
+  },
+  {
+    title: "NIVORA",
+    category: "WEB DESIGN",
+    description: "High-performance, cinematic visual landing page representing artificial intelligence interfaces.",
+    imageSrc: "/nivora.png",
+    link: "https://nivora.studio"
+  },
+  {
+    title: "CODIFY",
+    category: "DEVELOPMENT",
+    description: "A fast, modular Astro component library styled specifically with carbon wireframe aesthetics.",
+    imageSrc: "/codify.png",
+    link: "https://codify.pro"
+  },
+  {
+    title: "NEUTRA",
+    category: "VISUAL SYSTEM",
+    description: "Interactive dashboard system showcasing data metrics inside a glassmorphic radar module.",
+    imageSrc: "/neutra.png",
+    link: "https://neutra.studio"
+  }
+];
+
+const principles = [
+  { num: "01", name: "INTERFACE DESIGN", desc: "Clear interfaces with strong visual hierarchy built to perform." },
+  { num: "02", name: "SYSTEM THINKING", desc: "Scalable design patterns and components built for future growth." },
+  { num: "03", name: "FRAMER & CODE EXECUTION", desc: "Fast builds with polished micro-interactions and zero bloat." },
+  { num: "04", name: "VISUAL DIRECTION", desc: "Bold creative themes that make digital brands memorable worldwide." }
+];
+
+const services = [
+  {
+    num: "01",
+    name: "DESIGN",
+    desc: "Websites, landing pages, and product interfaces.",
+    icon: "/design_icon.png",
+    tags: ["UX Structure", "Visual Hierarchy", "Responsive Layouts", "Interaction-Ready"]
+  },
+  {
+    num: "02",
+    name: "DEVELOPMENT",
+    desc: "Fast, responsive Astro and Framer builds ready to launch.",
+    icon: "/dev_icon.png",
+    tags: ["Component Setup", "CMS Structure", "Smooth Interactions", "Performance-Ready"]
+  },
+  {
+    num: "03",
+    name: "VISUAL SYSTEM",
+    desc: "Reusable styles, components, and interface rules.",
+    icon: "/sys_icon.png",
+    tags: ["Design Tokens", "UI Components", "Style Guidelines", "Consistent Layouts"]
+  },
+  {
+    num: "04",
+    name: "CREATIVE",
+    desc: "Strong concepts and visual systems for bold brands.",
+    icon: "/creative_icon.png",
+    tags: ["Art Direction", "Motion Ideas", "Brand Atmosphere", "Visual Storytelling"]
+  }
+];
+
+const pricing = [
+  {
+    plan: "STARTER",
+    desc: "For focused landing pages",
+    price: "$1,200",
+    features: ["Landing page build", "Responsive layout grid", "Basic micro-interactions", "Launch checklists support"]
+  },
+  {
+    plan: "PRO",
+    desc: "Complete website system",
+    price: "$2,400",
+    features: ["Multi-page website", "Design system setup", "Modular CMS structure", "Advanced interactions", "SEO & Speed optimization"]
+  },
+  {
+    plan: "CUSTOM",
+    desc: "Advanced visual systems",
+    price: "$4,800",
+    features: ["Custom page structures", "Complex database CMS", "Motion direction & GSAP", "Full component libraries", "Ongoing technical support"]
+  }
+];
 ---
 
-<Layout title="Perspective Grid">
-  <!-- Rest of the items removed as requested. Pure interactive background grid. -->
+<Layout title="Omnira - Creative Portfolio System">
+  
+  <!-- Hero Section (Removed top padding pt-3 to pt-0 and added negative margin -mt-10 to pull it further upwards directly under the header navbar) -->
+  <section class="w-full max-w-7xl mx-auto px-6 pt-0 -mt-10 pb-24 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10 pointer-events-auto">
+    <!-- Left Column -->
+    <div class="lg:col-span-6 flex flex-col items-start font-['Chakra_Petch',sans-serif] justify-center">
+      <!-- Status Badge -->
+      <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-zinc-950/60 border border-zinc-800 text-[9px] font-bold tracking-[0.2em] text-orange-400 mb-6 uppercase">
+        <span class="w-1.5 h-1.5 bg-orange-500 rounded-full animate-ping"></span>
+        AVAILABLE FOR COLLABORATION
+      </div>
+      
+      <!-- Heading -->
+      <h1 class="font-['Orbitron',sans-serif] text-3xl md:text-5xl font-black text-white leading-tight tracking-wider uppercase select-none mb-6">
+        DESIGN BEYOND THE <span class="bg-gradient-to-r from-orange-500 to-yellow-400 bg-clip-text text-transparent">SYSTEM</span>
+      </h1>
+      
+      <!-- Subheading -->
+      <p class="text-zinc-400 text-xs md:text-sm font-normal tracking-wide leading-relaxed max-w-xl mb-8">
+        I design and build futuristic digital experiences with cinematic visuals, sharp layouts, and high-tech interactions. My work blends strategy, creativity, and clean execution to create portfolios that feel bold, immersive, and unforgettable.
+      </p>
+
+      <!-- CTA Links -->
+      <div class="flex flex-wrap items-center gap-4">
+        <a 
+          href="/contact" 
+          class="px-5 py-3 border border-orange-500/20 hover:border-orange-500/50 bg-orange-500/5 hover:bg-orange-500/10 text-orange-400 hover:text-white rounded text-[10px] font-bold tracking-widest transition-all duration-300"
+        >
+          SEND REQUEST
+        </a>
+        <a 
+          href="/works" 
+          class="px-5 py-3 border border-zinc-800 hover:border-zinc-500 bg-transparent text-zinc-400 hover:text-white rounded text-[10px] font-bold tracking-widest transition-all duration-300"
+        >
+          EXPLORE WORKS
+        </a>
+      </div>
+    </div>
+
+    <!-- Right Profile Photo -->
+    <div class="lg:col-span-6 w-full flex justify-center lg:justify-end items-center">
+      <div class="w-full max-w-[560px] flex justify-center lg:justify-end">
+        <InteractivePhoto src="/me1.png" alt="Creative Director Portrait" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Selected Work Grid -->
+  <section class="w-full max-w-6xl mx-auto px-6 py-24 border-t border-zinc-800/10 relative z-10 pointer-events-auto">
+    <div class="flex flex-col md:flex-row items-start md:items-end justify-between gap-6 mb-16 font-['Chakra_Petch',sans-serif]">
+      <div>
+        <span class="text-[9px] font-bold tracking-[0.25em] text-zinc-500 uppercase">SELECTED WORK</span>
+        <h2 class="font-['Orbitron',sans-serif] text-xl md:text-2xl font-extrabold text-white tracking-widest mt-1">CURATED COLLECTION</h2>
+      </div>
+      <p class="text-zinc-555 text-xs tracking-wide max-w-md leading-relaxed">
+        A curated collection of digital experiences shaped with strong visual direction, clean interaction, and futuristic design systems.
+      </p>
+    </div>
+
+    <!-- Projects Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+      {featuredProjects.map((p) => (
+        <ProjectCard 
+          title={p.title} 
+          category={p.category} 
+          description={p.description} 
+          imageSrc={p.imageSrc} 
+          link={p.link} 
+        />
+      ))}
+    </div>
+
+    <!-- Bottom link -->
+    <div class="flex justify-center mt-12">
+      <a 
+        href="/works" 
+        class="inline-flex items-center gap-2 text-zinc-450 hover:text-white text-xs font-bold tracking-widest transition-colors duration-300"
+      >
+        VIEW ALL WORKS
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"></path>
+        </svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- About Overview & Principles Grid -->
+  <section class="w-full max-w-6xl mx-auto px-6 py-24 border-t border-zinc-800/10 relative z-10 pointer-events-auto font-['Chakra_Petch',sans-serif]">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start mb-16">
+      <div class="lg:col-span-5">
+        <span class="text-[9px] font-bold tracking-[0.25em] text-zinc-500 uppercase">ABOUT ME</span>
+        <h2 class="font-['Orbitron',sans-serif] text-xl md:text-2xl font-extrabold text-white tracking-widest mt-1">SHARP DESIGN CLEAN FLOW</h2>
+      </div>
+      <div class="lg:col-span-7">
+        <p class="text-zinc-455 text-xs md:text-sm leading-relaxed tracking-wide">
+          I create high-impact websites and product interfaces shaped by strategy, systems, and clean execution. Every layout is structured to maintain clarity, performance, and future energy.
+        </p>
+      </div>
+    </div>
+
+    <!-- Principles Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {principles.map((pr) => (
+        <div class="p-6 border border-zinc-800/35 bg-zinc-950/10 rounded group hover:border-orange-500/20 transition-all duration-300">
+          <div class="flex items-center gap-3 mb-4 select-none">
+            <span class="text-[10px] font-mono text-orange-500">{pr.num}</span>
+            <span class="text-[9px] font-bold tracking-widest text-zinc-400 group-hover:text-white transition-colors">{pr.name}</span>
+          </div>
+          <p class="text-zinc-555 text-xs leading-relaxed font-normal tracking-wide">
+            {pr.desc}
+          </p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Process Workflow -->
+  <section class="w-full max-w-6xl mx-auto px-6 py-24 border-t border-zinc-800/10 relative z-10 pointer-events-auto">
+    <div class="flex flex-col md:flex-row items-start md:items-end justify-between gap-6 mb-16 font-['Chakra_Petch',sans-serif]">
+      <div>
+        <span class="text-[9px] font-bold tracking-[0.25em] text-zinc-500 uppercase">CREATIVE WORKFLOW</span>
+        <h2 class="font-['Orbitron',sans-serif] text-xl md:text-2xl font-extrabold text-white tracking-widest mt-1">PROCESS TIMELINE</h2>
+      </div>
+      <p class="text-zinc-555 text-xs tracking-wide max-w-md leading-relaxed">
+        A focused workflow for turning early ideas into polished digital experiences through clear direction, refined design, and smooth execution.
+      </p>
+    </div>
+
+    <ProcessPhases />
+  </section>
+
+  <!-- Services Grid -->
+  <section class="w-full max-w-6xl mx-auto px-6 py-24 border-t border-zinc-800/10 relative z-10 pointer-events-auto font-['Chakra_Petch',sans-serif]">
+    <div class="flex flex-col md:flex-row items-start md:items-end justify-between gap-6 mb-16">
+      <div>
+        <span class="text-[9px] font-bold tracking-[0.25em] text-zinc-500 uppercase">WHAT I CREATE</span>
+        <h2 class="font-['Orbitron',sans-serif] text-xl md:text-2xl font-extrabold text-white tracking-widest mt-1">CORE SERVICES</h2>
+      </div>
+      <p class="text-zinc-550 text-xs tracking-wide max-w-md leading-relaxed">
+        High-impact services for sharp interfaces, visual systems, and polished Framer/Astro execution.
+      </p>
+    </div>
+
+    <!-- Core Services Layout -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {services.map((s) => (
+        <div class="p-6 md:p-8 border border-zinc-800/35 bg-zinc-950/15 rounded-lg hover:border-orange-500/20 group transition-all duration-300">
+          <div class="flex items-center justify-between gap-4 mb-4 select-none">
+            <h3 class="font-['Orbitron',sans-serif] text-sm md:text-base font-extrabold text-white tracking-wider group-hover:text-orange-400 transition-colors flex items-center gap-3">
+              <img src={s.icon} alt={s.name} class="w-5 h-5 object-contain invert brightness-90 group-hover:brightness-100 transition-all" />
+              {s.num} {s.name}
+            </h3>
+          </div>
+          <p class="text-zinc-500 text-xs leading-relaxed tracking-wide font-normal mb-6">
+            {s.desc}
+          </p>
+          <div class="flex flex-wrap gap-2">
+            {s.tags.map((tag) => (
+              <span class="text-[9px] border border-zinc-850 px-2.5 py-1 rounded bg-[#121218] text-zinc-400 group-hover:border-zinc-800 transition-colors">
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Pricing Cards -->
+  <section class="w-full max-w-6xl mx-auto px-6 py-24 border-t border-zinc-800/10 relative z-10 pointer-events-auto font-['Chakra_Petch',sans-serif]">
+    <div class="flex flex-col md:flex-row items-start md:items-end justify-between gap-6 mb-16">
+      <div>
+        <span class="text-[9px] font-bold tracking-[0.25em] text-zinc-500 uppercase">PRICING TIERS</span>
+        <h2 class="font-['Orbitron',sans-serif] text-xl md:text-2xl font-extrabold text-white tracking-widest mt-1">BUILT FOR EVERY STAGE</h2>
+      </div>
+      <p class="text-zinc-555 text-xs tracking-wide max-w-md leading-relaxed">
+        Choose a focused package for sharp interfaces, polished Framer builds, and launch-ready digital experiences.
+      </p>
+    </div>
+
+    <!-- Pricing Cards Layout -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      {pricing.map((p) => (
+        <div class="p-6 md:p-8 border border-zinc-800/35 bg-zinc-950/20 rounded-lg flex flex-col group hover:border-orange-500/25 transition-all duration-300 relative">
+          <!-- Card label -->
+          <div class="flex items-baseline justify-between mb-4">
+            <span class="font-['Orbitron',sans-serif] text-sm font-bold tracking-widest text-zinc-300 group-hover:text-orange-400 transition-colors">{p.plan}</span>
+            <span class="font-['Orbitron',sans-serif] text-2xl font-black text-white">{p.price}</span>
+          </div>
+          <span class="text-zinc-555 text-[10px] tracking-wider mb-6 block border-b border-zinc-850 pb-3">{p.desc}</span>
+
+          <!-- Features -->
+          <ul class="flex flex-col gap-3 mb-8 text-zinc-500 text-xs leading-relaxed">
+            {p.features.map((feat) => (
+              <li class="flex items-start gap-2.5">
+                <span class="text-orange-500 text-[10px] font-mono select-none">✓</span>
+                <span class="tracking-wide">{feat}</span>
+              </li>
+            ))}
+          </ul>
+
+          <!-- Action -->
+          <a 
+            href="/contact" 
+            class="w-full text-center mt-auto py-3 border border-zinc-800 group-hover:border-orange-500/20 group-hover:bg-orange-500/5 text-zinc-400 group-hover:text-orange-400 rounded text-[9px] font-bold tracking-widest transition-all duration-300"
+          >
+            GET STARTED
+          </a>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="w-full max-w-6xl mx-auto px-6 py-24 border-t border-zinc-800/10 relative z-10 pointer-events-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+      <!-- Label columns -->
+      <div class="lg:col-span-4 font-['Chakra_Petch',sans-serif]">
+        <span class="text-[9px] font-bold tracking-[0.25em] text-zinc-500 uppercase">SYS: CHECK</span>
+        <h2 class="font-['Orbitron',sans-serif] text-xl md:text-2xl font-extrabold text-white tracking-widest mt-1">FAQs</h2>
+        <p class="text-zinc-550 text-xs tracking-wide leading-relaxed mt-4">
+          Everything you need to know about the creative process, timeline, project scope, and final delivery setup.
+        </p>
+      </div>
+
+      <!-- FAQ Accordion -->
+      <div class="lg:col-span-8">
+        <FAQAccordion />
+      </div>
+    </div>
+  </section>
+
 </Layout>

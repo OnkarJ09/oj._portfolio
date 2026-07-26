@@ -17,7 +17,7 @@ const totalTiles = gridSize * gridSize;
 ---
 
 <div
-  class={`relative w-full h-full overflow-hidden bg-[#1e1f22] [--fade-stop:#1e1f22] ${className}`}
+  class={`relative w-full h-full overflow-hidden bg-[#121218] [--fade-stop:#121218] ${className}`}
   style="perspective: 2000px; transform-style: preserve-3d;"
 >
   <div
@@ -34,7 +34,7 @@ const totalTiles = gridSize * gridSize;
     {Array.from({ length: totalTiles }).map((_, i) => (
       <div
         data-index={i}
-        class="tile min-h-[1px] min-w-[1px] border border-zinc-700/30 bg-transparent transition-colors duration-[1500ms] hover:duration-0 hover:bg-zinc-650"
+        class="tile min-h-[1px] min-w-[1px] border border-zinc-800/30 bg-transparent transition-colors duration-[1500ms] hover:duration-0 hover:bg-zinc-700"
       />
     ))}
   </div>

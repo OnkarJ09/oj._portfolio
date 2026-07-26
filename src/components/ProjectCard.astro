@@ -1,0 +1,82 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  category: string;
+  link: string;
+  imageSrc: string;
+  status?: string;
+}
+
+const {
+  title,
+  description,
+  category,
+  link,
+  imageSrc,
+  status = "COMPLETED"
+} = Astro.props;
+---
+
+<div class="project-card relative w-full border border-zinc-800/40 bg-zinc-950/20 hover:border-orange-500/20 backdrop-blur-sm rounded-lg overflow-hidden group transition-all duration-500 font-['Chakra_Petch',sans-serif]">
+  
+  <!-- Image Frame -->
+  <div class="relative w-full aspect-[4/3] overflow-hidden border-b border-zinc-800/30">
+    <div class="absolute inset-0 pointer-events-none bg-scanlines opacity-[0.05] z-10"></div>
+    <div class="w-full h-full overflow-hidden transition-transform duration-700 ease-out group-hover:scale-105">
+      <img 
+        src={imageSrc} 
+        alt={title} 
+        class="w-full h-full object-cover filter grayscale contrast-[1.1] brightness-[0.85] transition-all duration-700 group-hover:filter-none group-hover:brightness-[0.95] group-hover:contrast-100"
+      />
+    </div>
+    
+    <!-- Top-Left Corner Code -->
+    <div class="absolute top-3 left-3 z-20 text-[9px] font-mono text-zinc-500 group-hover:text-orange-400 transition-colors">
+      [{status}]
+    </div>
+    
+    <!-- Bottom-Left Category -->
+    <div class="absolute bottom-3 left-3 z-20 px-2.5 py-0.5 rounded bg-zinc-950/80 border border-zinc-800/80 text-[8px] font-bold tracking-widest text-zinc-400 group-hover:border-orange-500/30 group-hover:text-orange-400 transition-colors">
+      {category}
+    </div>
+  </div>
+
+  <!-- Content Section -->
+  <div class="p-6 relative">
+    <!-- Corner Markers -->
+    <div class="absolute top-0 left-0 w-2 h-2 border-t border-l border-zinc-800 pointer-events-none group-hover:border-orange-500/30 transition-colors"></div>
+    <div class="absolute top-0 right-0 w-2 h-2 border-t border-r border-zinc-800 pointer-events-none group-hover:border-orange-500/30 transition-colors"></div>
+    
+    <div class="flex items-center justify-between gap-4">
+      <h3 class="font-['Orbitron',sans-serif] font-bold text-sm md:text-base text-white tracking-wide group-hover:text-orange-400 transition-colors duration-300">
+        {title}
+      </h3>
+      <a 
+        href={link} 
+        target="_blank" 
+        rel="noopener noreferrer" 
+        class="text-[10px] font-bold tracking-widest text-zinc-500 hover:text-white transition-colors flex items-center gap-1"
+      >
+        VISIT
+        <svg class="w-3.5 h-3.5 transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+        </svg>
+      </a>
+    </div>
+    
+    <p class="text-zinc-500 text-xs mt-3 leading-relaxed tracking-wide font-normal max-w-sm">
+      {description}
+    </p>
+  </div>
+</div>
+
+<style>
+  .bg-scanlines {
+    background: linear-gradient(
+      rgba(18, 16, 16, 0) 50%, 
+      rgba(0, 0, 0, 0.25) 50%
+    );
+    background-size: 100% 4px;
+  }
+</style>

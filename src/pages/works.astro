@@ -1,0 +1,211 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+
+const allProjects = [
+  {
+    title: "BRANDORA",
+    category: "BRAND DESIGN",
+    type: "business",
+    description: "A comprehensive brand styling visual system designed for developer tooling platforms.",
+    imageSrc: "/brandora.png",
+    link: "https://brandora.studio",
+    status: "ACTIVE"
+  },
+  {
+    title: "NIVORA",
+    category: "WEB DESIGN",
+    type: "ai",
+    description: "High-performance, cinematic visual landing page representing artificial intelligence interfaces.",
+    imageSrc: "/nivora.png",
+    link: "https://nivora.studio",
+    status: "ACTIVE"
+  },
+  {
+    title: "CODIFY",
+    category: "DEVELOPMENT",
+    type: "one-page",
+    description: "A fast, modular Astro component library styled specifically with carbon wireframe aesthetics.",
+    imageSrc: "/codify.png",
+    link: "https://codify.pro",
+    status: "STABLE"
+  },
+  {
+    title: "NEUTRA",
+    category: "VISUAL SYSTEM",
+    type: "business",
+    description: "Interactive dashboard system showcasing data metrics inside a glassmorphic radar module.",
+    imageSrc: "/neutra.png",
+    link: "https://neutra.studio",
+    status: "DEPLOYED"
+  },
+  {
+    title: "AI NEST",
+    category: "CREATIVE",
+    type: "ai",
+    description: "Generative art composition displaying spatial intelligence models and dynamic physics calculations.",
+    imageSrc: "/ainest.png",
+    link: "https://ainest.io",
+    status: "ARCHIVE"
+  },
+  {
+    title: "STUDYFLOW",
+    category: "INTERFACES",
+    type: "portfolio",
+    description: "A futuristic productivity workflow management layout built for collaborative developer teams.",
+    imageSrc: "/studyflow.png",
+    link: "https://studyflow.com",
+    status: "COMPLETED"
+  },
+  {
+    title: "TODOFUSION",
+    category: "INTERFACES",
+    type: "one-page",
+    description: "Compact task management overlay featuring custom notification badges and retro grid blocks.",
+    imageSrc: "/todofusion.png",
+    link: "https://todofusion.io",
+    status: "COMPLETED"
+  },
+  {
+    title: "SNAPKIT",
+    category: "DEVELOPMENT",
+    type: "business",
+    description: "Holographic photography capture component dashboard displaying aperture and shutter rates.",
+    imageSrc: "/snapkit.png",
+    link: "https://snapkit.co",
+    status: "STABLE"
+  },
+  {
+    title: "GRIDO",
+    category: "VISUAL SYSTEM",
+    type: "portfolio",
+    description: "Responsive bento grid portfolio layout featuring customizable dark CSS tokens.",
+    imageSrc: "/grido.png",
+    link: "https://girdo.studio",
+    status: "DEPLOYED"
+  },
+  {
+    title: "TRAINLY",
+    category: "DEVELOPMENT",
+    type: "business",
+    description: "Futuristic interactive education platform presenting 3D physics modules and progress counters.",
+    imageSrc: "/trainly.png",
+    link: "https://trainly.com",
+    status: "COMPLETED"
+  },
+  {
+    title: "STICKIFY",
+    category: "CREATIVE",
+    type: "one-page",
+    description: "An online graphics library styled with neon terminal highlights and custom shapes.",
+    imageSrc: "/stickify.png",
+    link: "https://stickify.pro",
+    status: "ARCHIVE"
+  },
+  {
+    title: "LANDIFY",
+    category: "WEB DESIGN",
+    type: "portfolio",
+    description: "Futuristic landing page theme displaying cinematic layout transitions and floating indicators.",
+    imageSrc: "/landify.png",
+    link: "https://landify.com",
+    status: "ACTIVE"
+  }
+];
+
+const filters = [
+  { id: "all", name: "ALL PROJECTS" },
+  { id: "ai", name: "AI" },
+  { id: "business", name: "BUSINESS" },
+  { id: "one-page", name: "ONE PAGE" },
+  { id: "portfolio", name: "PORTFOLIO" }
+];
+---
+
+<Layout title="Selected Works - Omnira">
+  <main class="w-full max-w-6xl mx-auto px-6 py-16 md:py-24 relative z-10 pointer-events-auto">
+    <!-- Header banner -->
+    <div class="border-b border-zinc-800/20 pb-12 mb-12 font-['Chakra_Petch',sans-serif]">
+      <span class="text-[9px] font-bold tracking-[0.25em] text-zinc-500 uppercase">SYS: ARCHIVE</span>
+      <h1 class="font-['Orbitron',sans-serif] text-2xl md:text-4xl font-extrabold text-white tracking-widest mt-2 uppercase">
+        CRAFTED DIGITAL EXPERIENCES
+      </h1>
+      <p class="text-zinc-550 text-xs md:text-sm tracking-wide mt-4 max-w-xl leading-relaxed">
+        A curated collection of digital experiences shaped with strong visual direction, clean interaction, and futuristic design systems.
+      </p>
+    </div>
+
+    <!-- Filters Section -->
+    <div class="flex flex-wrap items-center gap-3 mb-12 font-['Chakra_Petch',sans-serif]" id="project-filters">
+      {filters.map((f, i) => (
+        <button 
+          data-filter={f.id}
+          class={`px-4 py-2 border rounded text-[10px] font-bold tracking-widest transition-all duration-300 ${i === 0 ? "border-orange-500/30 text-orange-400 bg-orange-500/5 active-filter" : "border-zinc-850 text-zinc-500 hover:text-white"}`}
+        >
+          {f.name}
+        </button>
+      ))}
+    </div>
+
+    <!-- Projects Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="projects-grid">
+      {allProjects.map((p) => (
+        <div data-type={p.type} class="project-wrapper transition-all duration-500">
+          <ProjectCard 
+            title={p.title} 
+            category={p.category} 
+            description={p.description} 
+            imageSrc={p.imageSrc} 
+            link={p.link}
+            status={p.status}
+          />
+        </div>
+      ))}
+    </div>
+  </main>
+</Layout>
+
+<script>
+  function setupFilters() {
+    const filterContainer = document.getElementById("project-filters");
+    const grid = document.getElementById("projects-grid");
+    if (!filterContainer || !grid) return;
+
+    const buttons = filterContainer.querySelectorAll("button");
+    const cards = grid.querySelectorAll(".project-wrapper");
+
+    buttons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        buttons.forEach((b) => {
+          b.classList.remove("border-orange-500/30", "text-orange-400", "bg-orange-500/5", "active-filter");
+          b.classList.add("border-zinc-850", "text-zinc-500");
+        });
+
+        btn.classList.remove("border-zinc-850", "text-zinc-500");
+        btn.classList.add("border-orange-500/30", "text-orange-400", "bg-orange-500/5", "active-filter");
+
+        const filterVal = btn.getAttribute("data-filter");
+
+        cards.forEach((card: any) => {
+          const cardType = card.getAttribute("data-type");
+          if (filterVal === "all" || cardType === filterVal) {
+            card.style.display = "block";
+            setTimeout(() => {
+              card.style.opacity = "1";
+              card.style.transform = "scale(1)";
+            }, 50);
+          } else {
+            card.style.opacity = "0";
+            card.style.transform = "scale(0.95)";
+            setTimeout(() => {
+              card.style.display = "none";
+            }, 300);
+          }
+        });
+      });
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", setupFilters);
+  document.addEventListener("astro:after-swap", setupFilters);
+</script>

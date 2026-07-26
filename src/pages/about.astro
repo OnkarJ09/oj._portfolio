@@ -1,0 +1,191 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const timeline = [
+  { year: "2026", title: "SHARPER SYSTEMS", desc: "Creating advanced portfolio templates, interactive components, and high-end Framer/Astro systems for bold digital brands." },
+  { year: "2025", title: "CREATIVE DIRECTION", desc: "Pushed visual direction toward cinematic, high-impact digital experiences with bold systems and immersive interfaces." },
+  { year: "2024", title: "MOTION LANGUAGE", desc: "Developed stronger design languages with typography, color, components, and motion working as one clear system." },
+  { year: "2023", title: "FRAMER BUILDS", desc: "Specialized in Framer builds, motion, CMS structure, and fast launch-ready websites with clean execution." },
+  { year: "2022", title: "WEB EVOLUTION", desc: "Expanded from static interface design into responsive websites, interactive layouts, and polished digital storytelling." },
+  { year: "2021", title: "PRODUCT SYSTEMS", desc: "Started building visual systems, reusable layouts, and scalable design patterns for consistent digital experiences." },
+  { year: "2020", title: "DESIGN FOUNDATION", desc: "Began my journey in UI/UX design, crafting interfaces that are clean, intuitive, and user-focused." }
+];
+
+const tools = [
+  { name: "FIGMA", category: "INTERFACE", level: "EXPERT" },
+  { name: "PHOTOSHOP", category: "DESIGN", level: "EXPERT" },
+  { name: "ILLUSTRATOR", category: "DESIGN", level: "ADVANCED" },
+  { name: "FRAMER", category: "DEVELOPMENT", level: "EXPERT" },
+  { name: "ASTRO", category: "DEVELOPMENT", level: "EXPERT" },
+  { name: "GSAP", category: "MOTION", level: "ADVANCED" }
+];
+---
+
+<Layout title="About - Omnira">
+  <main class="w-full max-w-6xl mx-auto px-6 py-16 md:py-24 relative z-10 pointer-events-auto font-['Chakra_Petch',sans-serif]">
+    <!-- Header banner -->
+    <div class="border-b border-zinc-800/20 pb-12 mb-16">
+      <span class="text-[9px] font-bold tracking-[0.25em] text-zinc-500 uppercase">SYS: PROFILE</span>
+      <h1 class="font-['Orbitron',sans-serif] text-2xl md:text-4xl font-extrabold text-white tracking-widest mt-2 uppercase">
+        ABOUT PROFILE
+      </h1>
+      <p class="text-zinc-550 text-xs md:text-sm tracking-wide mt-4 max-w-xl leading-relaxed">
+        I craft futuristic websites and digital experiences that combine clean aesthetics with powerful interactions. Every project is built with purpose, precision, and a focus on what truly matters.
+      </p>
+    </div>
+
+    <!-- Biography section -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-24">
+      <div class="lg:col-span-8 flex flex-col gap-6">
+        <span class="text-[9px] font-bold tracking-[0.2em] text-zinc-500 block uppercase">ABOUT ME</span>
+        <h2 class="font-['Orbitron',sans-serif] text-xl font-bold tracking-widest text-white uppercase leading-snug">
+          BEHIND OMNIRA.<br/>THIS IS WHO I AM
+        </h2>
+        <p class="text-zinc-450 text-xs md:text-sm leading-relaxed tracking-wide font-normal">
+          I’m Adrian Voss, an interface designer and Framer developer based in Berlin, Germany, creating futuristic websites for bold brands and independent creators.
+        </p>
+        <p class="text-zinc-450 text-xs md:text-sm leading-relaxed tracking-wide font-normal">
+          My work blends visual direction, interaction design, and clean development to build digital experiences that feel sharp, immersive, and easy to use.
+        </p>
+        <p class="text-zinc-450 text-xs md:text-sm leading-relaxed tracking-wide font-normal">
+          I care about clarity, structure, motion, and meaningful details — turning ideas into interfaces that look distinctive and perform with purpose.
+        </p>
+      </div>
+
+      <!-- Quick Metrics Grid -->
+      <div class="lg:col-span-4 grid grid-cols-1 gap-4">
+        <div class="p-6 border border-zinc-850 bg-zinc-950/15 rounded-lg">
+          <span class="text-[9px] font-bold tracking-widest text-zinc-500 block mb-2">EXPERIENCE</span>
+          <div class="flex items-baseline gap-2">
+            <span class="font-['Orbitron',sans-serif] text-3xl font-black text-white">6+</span>
+            <span class="text-[10px] text-zinc-550 font-bold uppercase">YEARS</span>
+          </div>
+        </div>
+        <div class="p-6 border border-zinc-850 bg-zinc-950/15 rounded-lg">
+          <span class="text-[9px] font-bold tracking-widest text-zinc-550 block mb-2 font-mono">DELIVERED</span>
+          <div class="flex items-baseline gap-2">
+            <span class="font-['Orbitron',sans-serif] text-3xl font-black text-white">40+</span>
+            <span class="text-[10px] text-zinc-550 font-bold uppercase">PROJECTS</span>
+          </div>
+        </div>
+        <div class="p-6 border border-zinc-850 bg-zinc-950/15 rounded-lg">
+          <span class="text-[9px] font-bold tracking-widest text-zinc-550 block mb-2 font-mono">DEVELOPED</span>
+          <div class="flex items-baseline gap-2">
+            <span class="font-['Orbitron',sans-serif] text-3xl font-black text-white">10K+</span>
+            <span class="text-[10px] text-zinc-550 font-bold uppercase">HOURS</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Interactive Process Terminal Section -->
+    <div class="border-t border-zinc-800/20 pt-16 mb-24">
+      <div class="flex flex-col gap-2 mb-12">
+        <span class="text-[9px] font-bold tracking-[0.25em] text-zinc-500 uppercase">SYS: WORKFLOW</span>
+        <h2 class="font-['Orbitron',sans-serif] text-base md:text-lg font-bold tracking-wider text-white">PROCESS TERMINAL</h2>
+      </div>
+
+      <!-- Cyber Terminal UI -->
+      <div class="w-full max-w-3xl mx-auto border border-zinc-800/60 bg-[#0a0a0f] rounded-lg overflow-hidden relative shadow-2xl">
+        <!-- Terminal Header -->
+        <div class="w-full h-9 bg-zinc-900/80 px-4 border-b border-zinc-800/50 flex items-center justify-between select-none">
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-[#ff5f56]"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-[#ffbd2e]"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-[#27c93f]"></span>
+          </div>
+          <span class="text-[9px] font-mono text-zinc-500 tracking-wider">OMNIRA_PROCESS_SYSTEM.SH</span>
+          <div class="w-10"></div>
+        </div>
+        
+        <!-- Terminal Body -->
+        <div class="p-6 font-mono text-[11px] leading-relaxed text-zinc-400 min-h-[320px] flex flex-col justify-between">
+          <div>
+            <div class="flex items-center gap-1.5 mb-2 text-zinc-500">
+              <span>omnira@terminal:~$</span>
+              <span class="text-orange-400">cat workflow.log</span>
+            </div>
+            
+            <!-- Terminal entries -->
+            <div class="flex flex-col gap-2 mb-6">
+              <div><span class="text-zinc-650">[01_INPUT]</span> Understand your goals, audience and context.</div>
+              <div><span class="text-zinc-650">[02_STRATEGY]</span> Analyze the market, competitors and opportunities.</div>
+              <div><span class="text-zinc-650">[03_STRUCTURE]</span> Build the information architecture and user flow.</div>
+              <div><span class="text-zinc-650">[04_INTERFACE]</span> Design the UI system, layouts and interactions.</div>
+              <div><span class="text-zinc-650">[05_LAUNCH]</span> Build in Astro/Framer, test thoroughly and deliver.</div>
+            </div>
+
+            <div class="flex items-center gap-1.5 mb-2 text-zinc-500">
+              <span>omnira@terminal:~$</span>
+              <span class="text-orange-400">syscheck --verify</span>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-zinc-500 mb-6">
+              <div>CLARITY: <span class="text-emerald-500">[OK]</span></div>
+              <div>RESPONSIVE: <span class="text-emerald-500">[OK]</span></div>
+              <div>MOTION: <span class="text-emerald-500">[OK]</span></div>
+              <div>PERFORMANCE: <span class="text-emerald-500">[OK]</span></div>
+            </div>
+          </div>
+
+          <div class="border-t border-zinc-800/40 pt-4 flex flex-col md:flex-row md:items-center justify-between gap-2 text-[10px] text-zinc-600">
+            <div>STATUS: READY TO LAUNCH</div>
+            <div class="text-orange-400/80">purpuse + structure + clarity = impact</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Timeline Archive -->
+    <div class="border-t border-zinc-800/20 pt-16 mb-24">
+      <div class="flex flex-col gap-2 mb-12">
+        <span class="text-[9px] font-bold tracking-[0.25em] text-zinc-500 uppercase">SYS: CHRONOLOGY</span>
+        <h2 class="font-['Orbitron',sans-serif] text-base md:text-lg font-bold tracking-wider text-white">YEARS OF FOCUSED DIGITAL CRAFT</h2>
+      </div>
+
+      <!-- Vertical Timeline -->
+      <div class="relative pl-6 md:pl-8 border-l border-zinc-850 flex flex-col gap-12">
+        {timeline.map((item) => (
+          <div class="relative group">
+            <div class="absolute -left-[31px] md:-left-[39px] top-1 w-2.5 h-2.5 rounded-full border border-zinc-800 bg-[#121218] group-hover:border-orange-500 transition-colors"></div>
+            
+            <div class="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-8">
+              <span class="font-['Orbitron',sans-serif] text-xs font-bold text-orange-400 group-hover:text-orange-350 transition-colors select-none">
+                {item.year}
+              </span>
+              <div class="flex flex-col gap-2">
+                <h3 class="font-['Orbitron',sans-serif] text-xs font-bold tracking-wider text-white">
+                  {item.title}
+                </h3>
+                <p class="text-zinc-550 text-xs leading-relaxed font-normal max-w-2xl">
+                  {item.desc}
+                </p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- System Stack -->
+    <div class="border-t border-zinc-800/20 pt-16">
+      <div class="flex flex-col gap-2 mb-12">
+        <span class="text-[9px] font-bold tracking-[0.25em] text-zinc-500 uppercase">SYS: STACK</span>
+        <h2 class="font-['Orbitron',sans-serif] text-base md:text-lg font-bold tracking-wider text-white">TOOLS BEHIND THE EXECUTION</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {tools.map((t) => (
+          <div class="p-5 border border-zinc-800/35 bg-zinc-950/10 rounded flex items-center justify-between group hover:border-orange-500/20 transition-all duration-300">
+            <div class="flex flex-col gap-1">
+              <span class="font-['Orbitron',sans-serif] text-xs font-bold tracking-wider text-white">{t.name}</span>
+              <span class="text-[8px] font-bold tracking-widest text-zinc-550 uppercase">{t.category}</span>
+            </div>
+            <span class="text-[9px] font-semibold text-zinc-500 border border-zinc-850 px-2 py-0.5 rounded group-hover:border-orange-500/10 group-hover:text-orange-400/80 transition-colors">
+              {t.level}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </main>
+</Layout>

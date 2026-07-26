@@ -1,0 +1,85 @@
+---
+---
+
+<header class="w-full border-b border-zinc-800/20 bg-[#121218]/40 backdrop-blur-md sticky top-0 z-50">
+  <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between font-['Chakra_Petch',sans-serif]">
+    
+    <!-- Left Logo -->
+    <a href="/" class="flex items-center gap-2 select-none">
+      <span class="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></span>
+      <span class="font-['Orbitron',sans-serif] font-bold text-base tracking-widest text-white">OMNIRA</span>
+    </a>
+
+    <!-- Navigation Links -->
+    <nav class="hidden md:flex items-center gap-8">
+      <a href="/" class="text-[11px] font-medium tracking-[0.15em] text-zinc-400 hover:text-white transition-colors duration-300">HOME</a>
+      <a href="/works" class="text-[11px] font-medium tracking-[0.15em] text-zinc-400 hover:text-white transition-colors duration-300">WORKS</a>
+      <a href="/about" class="text-[11px] font-medium tracking-[0.15em] text-zinc-400 hover:text-white transition-colors duration-300">ABOUT</a>
+      <a href="/contact" class="text-[11px] font-medium tracking-[0.15em] text-zinc-400 hover:text-white transition-colors duration-300">CONTACT</a>
+    </nav>
+
+    <!-- Tech Status & Clock Widget -->
+    <div class="hidden lg:flex items-center gap-6 text-[10px] text-zinc-500 tracking-wider">
+      <div class="flex items-center gap-2 border-r border-zinc-850 pr-4">
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span>
+        <span class="text-zinc-400 font-medium select-none">OPEN FOR WORK</span>
+      </div>
+      <div>
+        <span class="text-zinc-650">BERLIN</span>
+        <span id="nav-local-clock" class="text-zinc-400 font-mono font-medium ml-1">00:00:00 AM</span>
+      </div>
+    </div>
+
+    <!-- Mobile Menu Button -->
+    <button id="mobile-menu-btn" class="md:hidden text-zinc-400 hover:text-white transition-colors duration-300 focus:outline-none">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16m-7 6h7"></path>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobile Dropdown -->
+  <div id="mobile-dropdown" class="hidden md:hidden border-t border-zinc-850 bg-[#121218]/95 backdrop-blur-lg px-6 py-6 flex flex-col gap-4 font-['Chakra_Petch',sans-serif]">
+    <a href="/" class="text-xs font-semibold tracking-widest text-zinc-400 hover:text-white transition-colors">HOME</a>
+    <a href="/works" class="text-xs font-semibold tracking-widest text-zinc-400 hover:text-white transition-colors">WORKS</a>
+    <a href="/about" class="text-xs font-semibold tracking-widest text-zinc-400 hover:text-white transition-colors">ABOUT</a>
+    <a href="/contact" class="text-xs font-semibold tracking-widest text-zinc-400 hover:text-white transition-colors">CONTACT</a>
+  </div>
+</header>
+
+<script>
+  // Dynamic Local Clock Script
+  const clockEl = document.getElementById("nav-local-clock");
+  if (clockEl) {
+    const updateTime = () => {
+      const options: Intl.DateTimeFormatOptions = {
+        timeZone: 'Europe/Berlin',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true
+      };
+      clockEl.textContent = new Date().toLocaleTimeString('en-US', options);
+    };
+    updateTime();
+    setInterval(updateTime, 1000);
+  }
+
+  // Mobile Menu Toggle handler
+  const menuBtn = document.getElementById("mobile-menu-btn");
+  const dropdown = document.getElementById("mobile-dropdown");
+  const menuIcon = document.getElementById("menu-icon");
+
+  if (menuBtn && dropdown && menuIcon) {
+    menuBtn.addEventListener("click", () => {
+      const isHidden = dropdown.classList.contains("hidden");
+      if (isHidden) {
+        dropdown.classList.remove("hidden");
+        menuIcon.setAttribute("d", "M6 18L18 6M6 6l12 12");
+      } else {
+        dropdown.classList.add("hidden");
+        menuIcon.setAttribute("d", "M4 6h16M4 12h16m-7 6h7");
+      }
+    });
+  }
+</script>

@@ -1,0 +1,75 @@
+---
+interface FAQ {
+  num: string;
+  question: string;
+  answer: string;
+}
+
+const faqs: FAQ[] = [
+  {
+    num: "01",
+    question: "How long does it take?",
+    answer: "Typically, a standard project takes 2 to 4 weeks from early strategy to final polish. More complex applications or design systems may require additional scope and alignment."
+  },
+  {
+    num: "02",
+    question: "Do you build in Framer?",
+    answer: "Yes, I build in Framer for clients who prefer visual editing and fast CMS iterations. I also construct custom raw-code projects in Astro/React for maximum performance, SEO, and full customizability."
+  },
+  {
+    num: "03",
+    question: "Is it fully responsive?",
+    answer: "Absolutely. Every layout, card, grid, and navigation bar is fully optimized and tested to behave responsively across mobile, tablet, laptop, and ultra-wide desktop monitors."
+  },
+  {
+    num: "04",
+    question: "Can I add pages?",
+    answer: "Yes. Codebase structures are built systematically using reusable components, clean layouts, and design tokens, making it extremely easy to add pages or adjust styling parameters later."
+  },
+  {
+    num: "05",
+    question: "Do you support launch?",
+    answer: "Yes. I assist with domain configuration, hosting setup (Vercel, Netlify, Cloudflare), meta tags validation, and final performance optimization audits to ensure a perfect launch."
+  },
+  {
+    num: "06",
+    question: "Can I edit later?",
+    answer: "Yes, all contents, copy, and visual parameters are modular. For codebases, this uses simple variables and JSON files. For Framer setups, it utilizes the native visual editing CMS panels."
+  },
+  {
+    num: "07",
+    question: "Do you include CMS?",
+    answer: "Yes, all multi-page setups include a CMS structure configuration for articles, case studies, or portfolio items, making it easy to create and deploy new content."
+  },
+  {
+    num: "08",
+    question: "Can we add motion?",
+    answer: "Yes, motion is built into the core experience using lightweight libraries (like GSAP or native CSS transitions) to ensure a premium feel without hurting load performance."
+  }
+];
+---
+
+<div class="faq-accordion w-full flex flex-col gap-4 font-['Chakra_Petch',sans-serif]">
+  {faqs.map((faq) => (
+    <details class="group border border-zinc-800/40 bg-zinc-950/10 hover:border-orange-500/20 rounded-lg transition-all duration-300">
+      <summary class="flex items-center justify-between p-5 md:p-6 cursor-pointer select-none focus:outline-none list-none [&::-webkit-details-marker]:hidden">
+        <div class="flex items-center gap-4">
+          <span class="text-[10px] font-mono text-zinc-550 group-open:text-orange-400">{faq.num}</span>
+          <span class="text-xs md:text-sm font-semibold tracking-wide text-zinc-350 group-hover:text-white transition-colors">{faq.question}</span>
+        </div>
+        <div class="relative w-4 h-4 flex items-center justify-center text-zinc-500 group-hover:text-white transition-colors">
+          <!-- Horizontal line -->
+          <span class="absolute w-3.5 h-px bg-current"></span>
+          <!-- Vertical line (rotates to 0 on open) -->
+          <span class="absolute h-3.5 w-px bg-current transition-transform duration-300 group-open:rotate-90"></span>
+        </div>
+      </summary>
+      
+      <div class="px-5 pb-5 md:px-6 md:pb-6 border-t border-zinc-800/20 mt-[-1px] transition-all duration-300">
+        <p class="text-zinc-550 text-xs leading-relaxed tracking-wide font-normal pt-4 max-w-2xl">
+          {faq.answer}
+        </p>
+      </div>
+    </details>
+  ))}
+</div>

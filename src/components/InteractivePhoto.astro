@@ -1,0 +1,251 @@
+---
+interface Props {
+  src?: string;
+  alt?: string;
+}
+
+const { src = "/me1.png", alt = "Interactive Halftone Portrait" } = Astro.props;
+---
+
+<div class="interactive-photo-container relative w-full aspect-[928/1120] overflow-visible bg-transparent group">
+  <!-- Interactive Particle Canvas -->
+  <div class="relative w-full h-full flex items-center justify-center bg-transparent">
+    <canvas 
+      id="pixel-particle-canvas" 
+      data-src={src} 
+      class="w-full h-full transition-opacity duration-500 opacity-0"
+      style="mask-image: linear-gradient(to bottom, black 65%, transparent 95%); -webkit-mask-image: linear-gradient(to bottom, black 65%, transparent 95%);"
+    ></canvas>
+    
+    <!-- Loading indicator -->
+    <div id="canvas-loader" class="absolute inset-0 flex items-center justify-center text-zinc-700 text-[10px] tracking-[0.25em] font-mono animate-pulse">
+      SYS: HALFTONE_INIT...
+    </div>
+  </div>
+</div>
+
+<script>
+  class Particle {
+    x: number;
+    y: number;
+    originX: number;
+    originY: number;
+    gray: number;
+    size: number;
+    vx: number;
+    vy: number;
+    ease: number;
+    friction: number;
+
+    constructor(x: number, y: number, gray: number, size: number) {
+      this.originX = x;
+      this.originY = y;
+      this.x = x;
+      this.y = y;
+      this.gray = gray;
+      this.size = size;
+      this.vx = 0;
+      this.vy = 0;
+      this.ease = 0.12 + Math.random() * 0.04;
+      this.friction = 0.85;
+    }
+
+    draw(ctx: CanvasRenderingContext2D, isHovered: boolean, mouseX: number, mouseY: number) {
+      const brightness = this.gray / 255;
+      // Adjusted maxRadius to 0.36 to make the circular dots extremely tiny and dust-like
+      const maxRadius = this.size * 0.36;
+      
+      const radius = maxRadius * brightness * 1.1;
+      if (radius < 0.15) return; // Skip drawing extremely small particles
+
+      // Crisp silver-white digital particle color
+      let colorStr = `rgba(235, 235, 240, ${0.4 + brightness * 0.5})`;
+      
+      if (isHovered) {
+        const dx = mouseX - this.x;
+        const dy = mouseY - this.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const activeRadius = 45;
+        
+        if (dist < activeRadius) {
+          const blendRatio = (activeRadius - dist) / activeRadius;
+          const nr = Math.round(235 * (1 - blendRatio) + 251 * blendRatio);
+          const ng = Math.round(235 * (1 - blendRatio) + 152 * blendRatio);
+          const nb = Math.round(240 * (1 - blendRatio) + 40 * blendRatio);
+          colorStr = `rgba(${nr}, ${ng}, ${nb}, ${0.5 + brightness * 0.5})`;
+        }
+      }
+
+      ctx.fillStyle = colorStr;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, radius, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    update(mouseX: number, mouseY: number, isHovered: boolean) {
+      const dx = this.originX - this.x;
+      const dy = this.originY - this.y;
+      this.vx += dx * this.ease;
+      this.vy += dy * this.ease;
+
+      if (isHovered) {
+        const mdx = this.x - mouseX;
+        const mdy = this.y - mouseY;
+        const dist = Math.sqrt(mdx * mdx + mdy * mdy);
+        const radius = 55;
+        
+        if (dist < radius) {
+          const force = (radius - dist) / radius;
+          const angle = Math.atan2(mdy, mdx);
+          const push = force * 4.0; // Dynamic push force balanced for tiny particle grid
+          this.vx += Math.cos(angle) * push;
+          this.vy += Math.sin(angle) * push;
+        }
+      }
+
+      this.vx *= this.friction;
+      this.vy *= this.friction;
+      this.x += this.vx;
+      this.y += this.vy;
+    }
+  }
+
+  function initPixelCanvas() {
+    const canvas = document.getElementById("pixel-particle-canvas") as HTMLCanvasElement | null;
+    const loader = document.getElementById("canvas-loader");
+    if (!canvas) return;
+
+    const imgSrc = canvas.getAttribute("data-src") || "/me1.png";
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const img = new Image();
+    img.src = imgSrc;
+    img.crossOrigin = "anonymous";
+
+    img.onload = () => {
+      if (loader) loader.style.display = "none";
+      canvas.classList.remove("opacity-0");
+
+      const containerWidth = canvas.parentElement?.clientWidth || 372;
+      const containerHeight = canvas.parentElement?.clientHeight || 450;
+      
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = containerWidth * dpr;
+      canvas.height = containerHeight * dpr;
+      ctx.scale(dpr, dpr);
+
+      const bufferCanvas = document.createElement("canvas");
+      const gridWidth = 180; // High resolution column count for tiny particle density
+      const gridHeight = Math.round(gridWidth * (1120 / 928));
+      bufferCanvas.width = gridWidth;
+      bufferCanvas.height = gridHeight;
+      const bufferCtx = bufferCanvas.getContext("2d");
+      if (!bufferCtx) return;
+
+      bufferCtx.drawImage(img, 0, 0, gridWidth, gridHeight);
+      const imgData = bufferCtx.getImageData(0, 0, gridWidth, gridHeight);
+      const data = imgData.data;
+
+      const particles: Particle[] = [];
+      const scaleX = containerWidth / gridWidth;
+      const scaleY = containerHeight / gridHeight;
+      const particleSize = Math.max(scaleX, scaleY);
+
+      const verticalShift = -22;
+
+      for (let y = 0; y < gridHeight; y++) {
+        for (let x = 0; x < gridWidth; x++) {
+          const idx = (y * gridWidth + x) * 4;
+          const r = data[idx];
+          const g = data[idx + 1];
+          const b = data[idx + 2];
+          const a = data[idx + 3];
+
+          if (a > 30) {
+            // Apply steep contrast curves specifically to keep face details extremely sharp in tiny pixel grids
+            let gray = 0.299 * r + 0.587 * g + 0.114 * b;
+            
+            // Boost highlight clarity and clip low-contrast shadow noise
+            gray = (gray - 85) * 1.55 + 130; 
+            gray = Math.max(0, Math.min(255, gray));
+
+            if (gray > 40) {
+              particles.push(
+                new Particle(
+                  x * scaleX + scaleX / 2,
+                  y * scaleY + scaleY / 2 + verticalShift,
+                  gray,
+                  particleSize
+                )
+              );
+            }
+          }
+        }
+      }
+
+      let mouseX = 0;
+      let mouseY = 0;
+      let isHovered = false;
+
+      const updateMousePos = (e: MouseEvent) => {
+        const rect = canvas.getBoundingClientRect();
+        mouseX = e.clientX - rect.left;
+        mouseY = e.clientY - rect.top;
+      };
+
+      canvas.addEventListener("mousemove", (e) => {
+        isHovered = true;
+        updateMousePos(e);
+      });
+
+      canvas.addEventListener("mouseenter", (e) => {
+        isHovered = true;
+        updateMousePos(e);
+      });
+
+      canvas.addEventListener("mouseleave", () => {
+        isHovered = false;
+      });
+
+      canvas.addEventListener("touchmove", (e) => {
+        isHovered = true;
+        if (e.touches.length > 0) {
+          const rect = canvas.getBoundingClientRect();
+          mouseX = e.touches[0].clientX - rect.left;
+          mouseY = e.touches[0].top - rect.top;
+        }
+      }, { passive: true });
+
+      canvas.addEventListener("touchstart", (e) => {
+        isHovered = true;
+        if (e.touches.length > 0) {
+          const rect = canvas.getBoundingClientRect();
+          mouseX = e.touches[0].clientX - rect.left;
+          mouseY = e.touches[0].top - rect.top;
+        }
+      }, { passive: true });
+
+      canvas.addEventListener("touchend", () => {
+        isHovered = false;
+      }, { passive: true });
+
+      const animate = () => {
+        ctx.clearRect(0, 0, containerWidth, containerHeight);
+        
+        for (let i = 0; i < particles.length; i++) {
+          const p = particles[i];
+          p.update(mouseX, mouseY, isHovered);
+          p.draw(ctx, isHovered, mouseX, mouseY);
+        }
+        
+        requestAnimationFrame(animate);
+      };
+      
+      animate();
+    };
+  }
+
+  document.addEventListener("DOMContentLoaded", initPixelCanvas);
+  document.addEventListener("astro:after-swap", initPixelCanvas);
+</script>
