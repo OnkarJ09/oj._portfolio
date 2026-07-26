@@ -18,7 +18,10 @@ const {
 } = Astro.props;
 ---
 
-<div class="project-card relative w-full border border-zinc-800/40 bg-zinc-950/20 hover:border-orange-500/20 backdrop-blur-sm rounded-lg overflow-hidden group transition-all duration-500 font-['Chakra_Petch',sans-serif]">
+<div 
+  onclick={`window.open('${link}', '_blank', 'noopener,noreferrer')`}
+  class="project-card cursor-pointer relative w-full border border-zinc-800/40 bg-zinc-950/20 hover:border-orange-500/20 backdrop-blur-sm rounded-lg overflow-hidden group transition-all duration-500 font-['Chakra_Petch',sans-serif]"
+>
   
   <!-- Image Frame -->
   <div class="relative w-full aspect-[4/3] overflow-hidden border-b border-zinc-800/30">
@@ -52,20 +55,17 @@ const {
       <h3 class="font-['Orbitron',sans-serif] font-bold text-sm md:text-base text-white tracking-wide group-hover:text-orange-400 transition-colors duration-300">
         {title}
       </h3>
-      <a 
-        href={link} 
-        target="_blank" 
-        rel="noopener noreferrer" 
-        class="text-[10px] font-bold tracking-widest text-zinc-500 hover:text-white transition-colors flex items-center gap-1"
+      <span 
+        class="text-[10px] font-bold tracking-widest text-zinc-500 group-hover:text-white transition-colors flex items-center gap-1"
       >
         VISIT
         <svg class="w-3.5 h-3.5 transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
         </svg>
-      </a>
+      </span>
     </div>
     
-    <p class="text-zinc-500 text-xs mt-3 leading-relaxed tracking-wide font-normal max-w-sm">
+    <p class="text-zinc-550 text-xs mt-3 leading-relaxed tracking-wide font-normal max-w-sm">
       {description}
     </p>
   </div>
