@@ -13,12 +13,64 @@
       <span class="text-[12px] font-mono text-orange-500/80 tracking-wider pl-4 ascii-ripple-text">alias: mad_dog</span>
     </a>
 
-    <!-- Navigation Links -->
-    <nav class="hidden md:flex items-center gap-8">
-      <a href="/" class="text-[11px] font-medium tracking-[0.15em] text-zinc-400 hover:text-white transition-colors duration-300">HOME</a>
-      <a href="/works" class="text-[11px] font-medium tracking-[0.15em] text-zinc-400 hover:text-white transition-colors duration-300">WORKS</a>
-      <a href="/about" class="text-[11px] font-medium tracking-[0.15em] text-zinc-400 hover:text-white transition-colors duration-300">ABOUT</a>
-      <a href="/contact" class="text-[11px] font-medium tracking-[0.15em] text-zinc-400 hover:text-white transition-colors duration-300">CONTACT</a>
+    <!-- Navigation Links: Spotlight Navbar -->
+    <nav 
+      id="spotlight-navbar"
+      class="hidden md:flex relative h-10 rounded-full border border-zinc-800/40 bg-zinc-950/40 backdrop-blur-md px-1 items-center overflow-hidden select-none"
+      style="--spotlight-color: rgba(249, 115, 22, 0.12); --ambience-color: rgba(249, 115, 22, 1);"
+    >
+      <ul class="relative flex items-center h-full gap-0.5 z-10">
+        <li>
+          <a 
+            href="/" 
+            data-index="0"
+            class="nav-item px-4 py-1 text-[11px] font-semibold tracking-[0.18em] rounded-full transition-colors duration-200 text-zinc-400 hover:text-white"
+          >
+            HOME
+          </a>
+        </li>
+        <li>
+          <a 
+            href="/works" 
+            data-index="1"
+            class="nav-item px-4 py-1 text-[11px] font-semibold tracking-[0.18em] rounded-full transition-colors duration-200 text-zinc-400 hover:text-white"
+          >
+            WORKS
+          </a>
+        </li>
+        <li>
+          <a 
+            href="/about" 
+            data-index="2"
+            class="nav-item px-4 py-1 text-[11px] font-semibold tracking-[0.18em] rounded-full transition-colors duration-200 text-zinc-400 hover:text-white"
+          >
+            ABOUT
+          </a>
+        </li>
+        <li>
+          <a 
+            href="/contact" 
+            data-index="3"
+            class="nav-item px-4 py-1 text-[11px] font-semibold tracking-[0.18em] rounded-full transition-colors duration-200 text-zinc-400 hover:text-white"
+          >
+            CONTACT
+          </a>
+        </li>
+      </ul>
+
+      <!-- Spotlight Hover Glow (Follows Mouse) -->
+      <div
+        id="nav-spotlight"
+        class="pointer-events-none absolute inset-0 z-1 opacity-0 transition-opacity duration-300"
+        style="background: radial-gradient(80px circle at var(--spotlight-x, 0px) 50%, var(--spotlight-color) 0%, transparent 100%);"
+      ></div>
+
+      <!-- Active Ambience Glow Line (Translates smoothly) -->
+      <div
+        id="nav-ambience-glow"
+        class="pointer-events-none absolute bottom-0 left-0 h-[2px] w-[50px] z-2 bg-gradient-to-r from-orange-500 to-amber-400 shadow-[0_0_12px_rgba(249,115,22,0.8)] transition-all duration-300 ease-out"
+        style="transform: translateX(0px); opacity: 0;"
+      ></div>
     </nav>
 
     <!-- Tech Status & Clock Widget -->
@@ -85,4 +137,64 @@
       }
     });
   }
+
+  // Spotlight Navbar Script
+  function initSpotlightNavbar() {
+    const nav = document.getElementById("spotlight-navbar");
+    const spotlight = document.getElementById("nav-spotlight");
+    const activeGlow = document.getElementById("nav-ambience-glow");
+    if (!nav) return;
+
+    // 1. Mousemove listener to follow the cursor spotlight
+    if (spotlight) {
+      nav.addEventListener("mousemove", (e) => {
+        const rect = nav.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        nav.style.setProperty("--spotlight-x", `${x}px`);
+        spotlight.style.opacity = '1';
+      });
+
+      nav.addEventListener("mouseleave", () => {
+        spotlight.style.opacity = '0';
+      });
+    }
+
+    // 2. Active indicator alignment
+    const updateActiveIndicator = () => {
+      const pathname = window.location.pathname;
+      let activeIndex = 0;
+      if (pathname.includes('/works')) activeIndex = 1;
+      else if (pathname.includes('/about')) activeIndex = 2;
+      else if (pathname.includes('/contact')) activeIndex = 3;
+
+      const activeItem = nav.querySelector(`[data-index="${activeIndex}"]`);
+      if (activeItem && activeGlow) {
+        // Highlight current nav item
+        nav.querySelectorAll('.nav-item').forEach((item, idx) => {
+          if (idx === activeIndex) {
+            item.classList.add('text-orange-450', 'bg-orange-500/5');
+            item.classList.remove('text-zinc-400');
+          } else {
+            item.classList.remove('text-orange-450', 'bg-orange-500/5');
+            item.classList.add('text-zinc-400');
+          }
+        });
+
+        const navRect = nav.getBoundingClientRect();
+        const itemRect = activeItem.getBoundingClientRect();
+        
+        activeGlow.style.width = `${itemRect.width}px`;
+        activeGlow.style.transform = `translateX(${itemRect.left - navRect.left}px)`;
+        activeGlow.style.opacity = '1';
+      }
+    };
+
+    // Run immediately and after a short timeout to ensure layout rects are correct
+    updateActiveIndicator();
+    setTimeout(updateActiveIndicator, 50);
+  }
+
+  // Run on page load and astro page swap transitions
+  initSpotlightNavbar();
+  document.addEventListener("astro:after-swap", initSpotlightNavbar);
 </script>
