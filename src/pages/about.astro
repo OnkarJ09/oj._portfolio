@@ -56,21 +56,21 @@ const tools = [
 
       <!-- Quick Metrics Grid -->
       <div class="lg:col-span-4 grid grid-cols-1 gap-4">
-        <div class="p-6 border border-zinc-850 bg-zinc-950/15 rounded-lg">
-          <span class="text-[9px] font-bold tracking-widest text-zinc-500 block mb-2">EDUCATION</span>
+        <div class="p-6 border border-zinc-800 bg-[#07070b] shadow-[0_4px_16px_rgba(0,0,0,0.5)] rounded-lg">
+          <span class="text-[9px] font-bold tracking-widest text-zinc-500 block mb-2 font-mono">EDUCATION</span>
           <div class="flex items-baseline gap-2">
             <span class="font-['Orbitron',sans-serif] text-xl font-black text-white">B.Tech</span>
             <span class="text-[9px] text-zinc-550 font-bold uppercase">VLSI DESIGN & TECH</span>
           </div>
         </div>
-        <div class="p-6 border border-zinc-850 bg-zinc-950/15 rounded-lg">
+        <div class="p-6 border border-zinc-800 bg-[#07070b] shadow-[0_4px_16px_rgba(0,0,0,0.5)] rounded-lg">
           <span class="text-[9px] font-bold tracking-widest text-zinc-550 block mb-2 font-mono">PROJECTS BUILT</span>
           <div class="flex items-baseline gap-2">
             <span class="font-['Orbitron',sans-serif] text-3xl font-black text-white">10+</span>
             <span class="text-[10px] text-zinc-550 font-bold uppercase">ACTIVE SYSTEMS</span>
           </div>
         </div>
-        <div class="p-6 border border-zinc-850 bg-zinc-950/15 rounded-lg">
+        <div class="p-6 border border-zinc-800 bg-[#07070b] shadow-[0_4px_16px_rgba(0,0,0,0.5)] rounded-lg">
           <span class="text-[9px] font-bold tracking-widest text-zinc-550 block mb-2 font-mono">CREDENTIALS</span>
           <div class="flex items-baseline gap-2">
             <span class="font-['Orbitron',sans-serif] text-3xl font-black text-white">2+</span>
@@ -177,12 +177,12 @@ const tools = [
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {tools.map((t) => (
-          <div class="p-5 border border-zinc-800/35 bg-zinc-950/10 rounded flex items-center justify-between group hover:border-orange-500/20 transition-all duration-300">
+          <div class="p-5 border border-zinc-800 bg-[#07070b] shadow-[0_4px_16px_rgba(0,0,0,0.5)] rounded flex items-center justify-between group hover:border-orange-500/20 transition-all duration-300">
             <div class="flex flex-col gap-1">
               <span class="font-['Orbitron',sans-serif] text-xs font-bold tracking-wider text-white">{t.name}</span>
-              <span class="text-[8px] font-bold tracking-widest text-zinc-550 uppercase">{t.category}</span>
+              <span class="text-[8px] font-bold tracking-widest text-zinc-555 uppercase font-mono">{t.category}</span>
             </div>
-            <span class="text-[9px] font-semibold text-zinc-500 border border-zinc-850 px-2 py-0.5 rounded group-hover:border-orange-500/10 group-hover:text-orange-400/80 transition-colors">
+            <span class="text-[9px] font-semibold text-zinc-500 border border-zinc-850 px-2 py-0.5 rounded group-hover:border-orange-500/10 group-hover:text-orange-400/80 transition-colors font-mono">
               {t.level}
             </span>
           </div>

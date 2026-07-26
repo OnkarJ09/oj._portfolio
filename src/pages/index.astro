@@ -178,7 +178,7 @@ const services = [
     <!-- Principles Cards -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       {principles.map((pr) => (
-        <div class="p-6 border border-zinc-800/35 bg-zinc-950/10 rounded group hover:border-orange-500/20 transition-all duration-300">
+        <div class="p-6 border border-zinc-800 bg-[#07070b] shadow-[0_8px_24px_rgba(0,0,0,0.65)] rounded group hover:border-orange-500/25 transition-all duration-300">
           <div class="flex items-center gap-3 mb-4 select-none">
             <span class="text-[10px] font-mono text-orange-500">{pr.num}</span>
             <span class="text-[9px] font-bold tracking-widest text-zinc-400 group-hover:text-white transition-colors">{pr.name}</span>
@@ -221,7 +221,7 @@ const services = [
     <!-- Core Services Layout -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
       {services.map((s) => (
-        <div class="p-6 md:p-8 border border-zinc-800/35 bg-zinc-950/15 rounded-lg hover:border-orange-500/20 group transition-all duration-300">
+        <div class="p-6 md:p-8 border border-zinc-800 bg-[#07070b] shadow-[0_12px_32px_rgba(0,0,0,0.65)] rounded-lg hover:border-orange-500/25 group transition-all duration-300">
           <div class="flex items-center justify-between gap-4 mb-4 select-none">
             <h3 class="font-['Orbitron',sans-serif] text-sm md:text-base font-extrabold text-white tracking-wider group-hover:text-orange-400 transition-colors flex items-center gap-3">
               <img src={s.icon} alt={s.name} class="w-5 h-5 object-contain invert brightness-90 group-hover:brightness-100 transition-all" />

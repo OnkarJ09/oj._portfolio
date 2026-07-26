@@ -51,7 +51,7 @@ const faqs: FAQ[] = [
 
 <div class="faq-accordion w-full flex flex-col gap-4 font-['Chakra_Petch',sans-serif]">
   {faqs.map((faq) => (
-    <details class="group border border-zinc-800/40 bg-zinc-950/10 hover:border-orange-500/20 rounded-lg transition-all duration-300">
+    <details class="group border border-zinc-800 bg-[#07070b] hover:border-orange-500/20 rounded-lg shadow-[0_4px_16px_rgba(0,0,0,0.5)] transition-all duration-300">
       <summary class="flex items-center justify-between p-5 md:p-6 cursor-pointer select-none focus:outline-none list-none [&::-webkit-details-marker]:hidden">
         <div class="flex items-center gap-4">
           <span class="text-[10px] font-mono text-zinc-550 group-open:text-orange-400">{faq.num}</span>
