@@ -4,10 +4,10 @@ interface Props {
   alt?: string;
 }
 
-const { src = "/me1.png", alt = "Interactive Halftone Portrait" } = Astro.props;
+const { src = "/me2.png", alt = "Interactive Halftone Portrait" } = Astro.props;
 ---
 
-<div class="interactive-photo-container relative w-full aspect-[928/1120] overflow-visible bg-transparent group">
+<div class="interactive-photo-container relative w-full aspect-[1882/1979] overflow-visible bg-transparent group">
   <!-- Interactive Particle Canvas -->
   <div class="relative w-full h-full flex items-center justify-center bg-transparent">
     <canvas 
@@ -55,8 +55,6 @@ const { src = "/me1.png", alt = "Interactive Halftone Portrait" } = Astro.props;
     }
 
     update(mouseX: number, mouseY: number, isHovered: boolean) {
-      // OPTIMIZATION: Bypasses particle math completely if the mouse is not hovered
-      // and the particle has fully snapped back to its origin.
       if (!isHovered && Math.abs(this.vx) < 0.005 && Math.abs(this.vy) < 0.005 && Math.abs(this.x - this.originX) < 0.05 && Math.abs(this.y - this.originY) < 0.05) {
         this.x = this.originX;
         this.y = this.originY;
@@ -86,7 +84,7 @@ const { src = "/me1.png", alt = "Interactive Halftone Portrait" } = Astro.props;
           const push = force * 4.2;
           this.vx += Math.cos(angle) * push;
           this.vy += Math.sin(angle) * push;
-          this.blendRatio = force; // Store proximity ratio for color highlights
+          this.blendRatio = force;
         } else {
           this.blendRatio = 0;
         }
@@ -106,7 +104,7 @@ const { src = "/me1.png", alt = "Interactive Halftone Portrait" } = Astro.props;
     const loader = document.getElementById("canvas-loader");
     if (!canvas) return;
 
-    const imgSrc = canvas.getAttribute("data-src") || "/me1.png";
+    const imgSrc = canvas.getAttribute("data-src") || "/me2.png";
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
@@ -127,9 +125,8 @@ const { src = "/me1.png", alt = "Interactive Halftone Portrait" } = Astro.props;
       ctx.scale(dpr, dpr);
 
       const bufferCanvas = document.createElement("canvas");
-      // OPTIMIZATION: Increased columns to 240 for extremely fine stardust resolution
       const gridWidth = 240; 
-      const gridHeight = Math.round(gridWidth * (1120 / 928));
+      const gridHeight = Math.round(gridWidth * (1979 / 1882)); // Updated to respect me2.png size ratio (1882x1979)
       bufferCanvas.width = gridWidth;
       bufferCanvas.height = gridHeight;
       const bufferCtx = bufferCanvas.getContext("2d");
@@ -157,7 +154,6 @@ const { src = "/me1.png", alt = "Interactive Halftone Portrait" } = Astro.props;
           if (a > 30) {
             let gray = 0.299 * r + 0.587 * g + 0.114 * b;
             
-            // Adjust threshold and curves so facial highlights are extremely sharp in tiny pixel grids
             gray = (gray - 80) * 1.6 + 130; 
             gray = Math.max(0, Math.min(255, gray));
 
@@ -221,13 +217,11 @@ const { src = "/me1.png", alt = "Interactive Halftone Portrait" } = Astro.props;
         isHovered = false;
       }, { passive: true });
 
-      // Instanced Drawing Setup (8 brightness levels + 8 hover highlights)
       const numBuckets = 8;
       
       const animate = () => {
         ctx.clearRect(0, 0, containerWidth, containerHeight);
         
-        // Initialize draw buckets to consolidate fill calls
         const grayBuckets: Particle[][] = Array.from({ length: numBuckets }, () => []);
         const hoverBuckets: Particle[][] = Array.from({ length: numBuckets }, () => []);
 
@@ -244,7 +238,6 @@ const { src = "/me1.png", alt = "Interactive Halftone Portrait" } = Astro.props;
           }
         }
 
-        // Draw Grayscale buckets (Consolidates up to 15,000 draw calls to 8 fill calls)
         for (let b = 0; b < numBuckets; b++) {
           const pList = grayBuckets[b];
           if (pList.length === 0) continue;
@@ -262,7 +255,6 @@ const { src = "/me1.png", alt = "Interactive Halftone Portrait" } = Astro.props;
           ctx.fill();
         }
 
-        // Draw Hover buckets (Consolidates hover highlights to 8 fill calls)
         for (let b = 0; b < numBuckets; b++) {
           const pList = hoverBuckets[b];
           if (pList.length === 0) continue;
