@@ -15,7 +15,7 @@ const phases = [
   {
     step: "03",
     name: "DEVELOPMENT",
-    title: "PHASE 03: ASTRO BUILD",
+    title: "PHASE 03: BUILD",
     desc: "Turn the approved direction into a clean high-performance code experience with interaction, motion, and precision."
   },
   {
@@ -32,23 +32,26 @@ const phases = [
   <div class="hidden lg:block absolute top-[40px] left-[5%] right-[5%] h-px bg-zinc-800/40 z-0"></div>
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative z-10">
-    {phases.map((p) => (
-      <div class="group relative p-6 border border-zinc-800/30 bg-zinc-950/10 hover:border-orange-500/20 backdrop-blur-sm rounded-lg transition-all duration-500">
-        <!-- Corner Markers -->
-        <div class="absolute top-0 left-0 w-2 h-2 border-t border-l border-zinc-800 pointer-events-none group-hover:border-orange-500/45 transition-colors"></div>
-        <div class="absolute top-0 right-0 w-2 h-2 border-t border-r border-zinc-800 pointer-events-none group-hover:border-orange-500/45 transition-colors"></div>
-        <div class="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-zinc-800 pointer-events-none group-hover:border-orange-500/45 transition-colors"></div>
-        <div class="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-zinc-800 pointer-events-none group-hover:border-orange-500/45 transition-colors"></div>
+    {phases.map((p, i) => (
+      <div
+        class="phase-block relative p-6 border border-zinc-800/30 bg-zinc-950/10 backdrop-blur-sm rounded-lg overflow-visible"
+        style={`--reveal-delay: ${i * 130}ms;`}
+      >
+        <!-- Cyber Corner Brackets (scroll-activated outline) -->
+        <span class="corner corner-tl"></span>
+        <span class="corner corner-tr"></span>
+        <span class="corner corner-bl"></span>
+        <span class="corner corner-br"></span>
 
         <!-- Node Circle & Number -->
         <div class="flex items-center justify-between mb-6">
-          <div class="flex items-center justify-center w-9 h-9 rounded bg-[#121218] border border-zinc-800 group-hover:border-orange-500/30 transition-colors">
-            <span class="text-xs font-mono font-bold text-zinc-400 group-hover:text-orange-400 transition-colors">{p.step}</span>
+          <div class="node flex items-center justify-center w-9 h-9 rounded bg-[#121218] border border-zinc-800">
+            <span class="node-num text-xs font-mono font-bold text-zinc-400">{p.step}</span>
           </div>
-          <span class="text-[9px] font-bold tracking-[0.2em] text-zinc-500 group-hover:text-orange-400/80 transition-colors">{p.name}</span>
+          <span class="phase-name text-[9px] font-bold tracking-[0.2em] text-zinc-500">{p.name}</span>
         </div>
 
-        <h4 class="font-['Orbitron',sans-serif] text-xs font-bold tracking-wider text-zinc-350 mb-3 group-hover:text-white transition-colors">
+        <h4 class="phase-title font-['Orbitron',sans-serif] text-xs font-bold tracking-wider text-zinc-350">
           {p.title}
         </h4>
         <p class="text-zinc-500 text-xs leading-relaxed font-normal tracking-wide">
@@ -58,3 +61,116 @@ const phases = [
     ))}
   </div>
 </div>
+
+<style>
+  /* ---- Cyber outline: inactive (default, pre-scroll) ---- */
+  .phase-block {
+    transition:
+      border-color 0.6s ease,
+      background-color 0.6s ease,
+      box-shadow 0.6s ease;
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  /* Corner brackets stay hidden until the block scrolls into view */
+  .phase-block .corner {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    pointer-events: none;
+    opacity: 0;
+    transform: scale(0.2);
+    transition:
+      transform 0.5s cubic-bezier(0.2, 0.65, 0.3, 0.9),
+      opacity 0.45s ease;
+    transition-delay: calc(var(--reveal-delay, 0ms) + 140ms);
+  }
+  .phase-block .corner-tl {
+    top: 0; left: 0;
+    border-top: 1.5px solid rgba(249, 115, 22, 0.65);
+    border-left: 1.5px solid rgba(249, 115, 22, 0.65);
+    transform-origin: top left;
+  }
+  .phase-block .corner-tr {
+    top: 0; right: 0;
+    border-top: 1.5px solid rgba(249, 115, 22, 0.65);
+    border-right: 1.5px solid rgba(249, 115, 22, 0.65);
+    transform-origin: top right;
+  }
+  .phase-block .corner-bl {
+    bottom: 0; left: 0;
+    border-bottom: 1.5px solid rgba(249, 115, 22, 0.65);
+    border-left: 1.5px solid rgba(249, 115, 22, 0.65);
+    transform-origin: bottom left;
+  }
+  .phase-block .corner-br {
+    bottom: 0; right: 0;
+    border-bottom: 1.5px solid rgba(249, 115, 22, 0.65);
+    border-right: 1.5px solid rgba(249, 115, 22, 0.65);
+    transform-origin: bottom right;
+  }
+
+  .phase-block .node,
+  .phase-block .node-num,
+  .phase-block .phase-name,
+  .phase-block .phase-title {
+    transition: color 0.5s ease, border-color 0.5s ease;
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  /* ---- Cyber outline: activated on scroll reveal ---- */
+  .phase-block.is-visible {
+    border-color: rgba(249, 115, 22, 0.4);
+    box-shadow:
+      0 0 24px rgba(249, 115, 22, 0.1),
+      inset 0 0 1px rgba(249, 115, 22, 0.05);
+  }
+  .phase-block.is-visible .corner {
+    opacity: 1;
+    transform: scale(1);
+  }
+  .phase-block.is-visible .node {
+    border-color: rgba(249, 115, 22, 0.45);
+  }
+  .phase-block.is-visible .node-num {
+    color: #fb923c;
+  }
+  .phase-block.is-visible .phase-name {
+    color: rgba(251, 146, 60, 0.8);
+  }
+  .phase-block.is-visible .phase-title {
+    color: #ffffff;
+  }
+</style>
+
+<script>
+  function initProcessScrollReveal() {
+    const blocks = document.querySelectorAll<HTMLElement>(".phase-block");
+    if (!blocks.length) return;
+
+    // Graceful fallback if IntersectionObserver is unavailable
+    if (!("IntersectionObserver" in window)) {
+      blocks.forEach((b) => b.classList.add("is-visible"));
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            // One-shot reveal: stay highlighted once activated
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.4, rootMargin: "0px 0px -10% 0px" }
+    );
+
+    blocks.forEach((b) => observer.observe(b));
+  }
+
+  // Run on page load and astro page swap transitions
+  initProcessScrollReveal();
+  document.addEventListener("astro:after-swap", initProcessScrollReveal);
+</script>
