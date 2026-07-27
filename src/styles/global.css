@@ -21,3 +21,43 @@
 .reveal-delay-400 { transition-delay: 400ms; }
 .reveal-delay-500 { transition-delay: 500ms; }
 
+/* Custom Themed Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #07070b;
+}
+::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 3px;
+  transition: background 0.3s ease;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #f97316;
+}
+
+/* Custom Text Selection Highlight */
+::selection {
+  background-color: rgba(249, 115, 22, 0.18);
+  color: #ffedd5;
+}
+
+/* Cyber Section Divider */
+.cyber-divider {
+  border-top: 1.5px solid rgba(63, 63, 70, 0.25);
+  position: relative;
+}
+.cyber-divider::after {
+  content: "";
+  position: absolute;
+  top: -1.5px;
+  left: 15%;
+  width: 70%;
+  height: 1.5px;
+  background: linear-gradient(90deg, transparent, rgba(249, 115, 22, 0.18), transparent);
+}
+
+
+

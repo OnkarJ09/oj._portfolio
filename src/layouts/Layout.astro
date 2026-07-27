@@ -30,6 +30,13 @@ const { title = "Perspective Grid" } = Astro.props;
       <PerspectiveGrid gridSize={30} fadeRadius={85} />
     </div>
 
+    <!-- Global Soft Ambient Cursor Glow -->
+    <div 
+      id="global-cursor-glow" 
+      class="pointer-events-none fixed inset-0 z-1 opacity-70 hidden md:block"
+      style="background: radial-gradient(600px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(249, 115, 22, 0.045) 0%, transparent 80%);"
+    ></div>
+
     <!-- Navigation Header -->
     <Navbar />
 
@@ -200,9 +207,28 @@ const { title = "Perspective Grid" } = Astro.props;
     });
   }
 
+  function initGlobalGlow() {
+    const glowEl = document.getElementById("global-cursor-glow");
+    if (!glowEl) return;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      glowEl.style.setProperty("--mouse-x", `${e.clientX}px`);
+      glowEl.style.setProperty("--mouse-y", `${e.clientY}px`);
+    };
+
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
+
+    // Clean up previous listeners on transition swap
+    if ((window as any)._globalGlowHandler) {
+      window.removeEventListener("mousemove", (window as any)._globalGlowHandler);
+    }
+    (window as any)._globalGlowHandler = handleMouseMove;
+  }
+
   function initPage() {
     initAsciiRipple();
     initScrollReveal();
+    initGlobalGlow();
   }
 
   // Run on page load and astro page swap transitions

@@ -50,7 +50,7 @@ const {
     </div>
 
     <!-- Bottom-Left Category -->
-    <div class="pc-cat absolute bottom-3 left-3 z-20 px-2.5 py-0.5 rounded bg-zinc-950/80 border border-zinc-800/80 text-[8px] font-bold tracking-widest text-zinc-400">
+    <div class="pc-cat absolute bottom-3 left-3 z-20 px-2.5 py-0.5 rounded bg-zinc-950/80 border border-zinc-800/80 text-[8px] font-bold tracking-widest text-zinc-400 transition-all duration-300 group-hover:border-orange-500/30 group-hover:text-orange-400">
       {category}
     </div>
   </div>
@@ -65,10 +65,10 @@ const {
       <h3 class="pc-title font-['Orbitron',sans-serif] font-bold text-sm md:text-base text-white tracking-wide">
         {title}
       </h3>
-      <span class="text-[10px] font-bold tracking-widest text-zinc-500 group-hover:text-white transition-colors flex items-center gap-1">
+      <span class="text-[10px] font-bold tracking-widest text-zinc-500 group-hover:text-orange-400 transition-colors flex items-center gap-1">
         VISIT
-        <svg class="w-3.5 h-3.5 transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+        <svg class="w-3.5 h-3.5 transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7M17 7H7M17 7V17"></path>
         </svg>
       </span>
     </div>
