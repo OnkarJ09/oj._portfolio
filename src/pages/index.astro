@@ -101,13 +101,13 @@ const services = [
       <div class="flex flex-wrap items-center gap-4">
         <a 
           href="/contact" 
-          class="px-5 py-3 border border-orange-500/20 hover:border-orange-500/50 bg-orange-500/5 hover:bg-orange-500/10 text-orange-400 hover:text-white rounded text-[10px] font-bold tracking-widest transition-all duration-300"
+          class="px-5 py-3 border border-orange-500/20 hover:border-orange-500/50 bg-orange-500/5 hover:bg-orange-500/10 text-orange-400 hover:text-white rounded text-[12px] font-bold tracking-widest transition-all duration-300"
         >
           SEND REQUEST
         </a>
         <a 
           href="/works" 
-          class="px-5 py-3 border border-zinc-800 hover:border-zinc-500 bg-transparent text-zinc-400 hover:text-white rounded text-[10px] font-bold tracking-widest transition-all duration-300"
+          class="px-5 py-3 border border-zinc-800 hover:border-zinc-500 bg-transparent text-zinc-400 hover:text-white rounded text-[12px] font-bold tracking-widest transition-all duration-300"
         >
           EXPLORE WORKS
         </a>
@@ -203,7 +203,7 @@ const services = [
     <div class="flex justify-center mt-12 reveal-on-scroll">
       <a 
         href="/works" 
-        class="inline-flex items-center gap-2 text-zinc-450 hover:text-white text-xs font-bold tracking-widest transition-colors duration-300"
+        class="inline-flex items-center gap-2 text-zinc-400 hover:text-white text-sm font-bold tracking-widest transition-colors duration-300"
       >
         VIEW ALL WORKS
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -217,11 +217,11 @@ const services = [
   <section class="w-full max-w-6xl mx-auto px-6 py-24 cyber-divider relative z-10 pointer-events-auto font-['Chakra_Petch',sans-serif] reveal-on-scroll">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start mb-16">
       <div class="lg:col-span-5">
-        <span class="text-[9px] font-bold tracking-[0.25em] text-zinc-500 uppercase">ABOUT ME</span>
+        <span class="text-[11px] font-extrabold tracking-[0.25em] text-zinc-400 uppercase">ABOUT ME</span>
         <h2 class="font-['Orbitron',sans-serif] text-xl md:text-2xl font-extrabold text-white tracking-widest mt-1">SHARP DESIGN CLEAN FLOW</h2>
       </div>
       <div class="lg:col-span-7">
-        <p class="text-zinc-455 text-xs md:text-sm leading-relaxed tracking-wide">
+        <p class="text-zinc-250 text-sm md:text-base leading-relaxed tracking-wider font-semibold">
           I create high-impact websites and product interfaces shaped by strategy, systems, and clean execution. Every layout is structured to maintain clarity, performance, and future energy.
         </p>
       </div>
@@ -235,10 +235,10 @@ const services = [
           style={`transition-delay: ${idx * 100}ms;`}
         >
           <div class="flex items-center gap-3 mb-4 select-none">
-            <span class="text-[10px] font-mono text-orange-500">{pr.num}</span>
-            <span class="text-[9px] font-bold tracking-widest text-zinc-400 group-hover:text-white transition-colors">{pr.name}</span>
+            <span class="text-[12px] font-mono font-bold text-orange-500">{pr.num}</span>
+            <span class="text-[11px] font-extrabold tracking-widest text-zinc-200 group-hover:text-white transition-colors">{pr.name}</span>
           </div>
-          <p class="text-zinc-555 text-xs leading-relaxed font-normal tracking-wide">
+          <p class="text-zinc-300 text-sm leading-relaxed tracking-wider font-semibold">
             {pr.desc}
           </p>
         </div>
@@ -250,10 +250,10 @@ const services = [
   <section class="w-full max-w-6xl mx-auto px-6 py-24 cyber-divider relative z-10 pointer-events-auto reveal-on-scroll">
     <div class="flex flex-col md:flex-row items-start md:items-end justify-between gap-6 mb-16 font-['Chakra_Petch',sans-serif]">
       <div>
-        <span class="text-[9px] font-bold tracking-[0.25em] text-zinc-500 uppercase">CREATIVE WORKFLOW</span>
+        <span class="text-[11px] font-extrabold tracking-[0.25em] text-zinc-400 uppercase">CREATIVE WORKFLOW</span>
         <h2 class="font-['Orbitron',sans-serif] text-xl md:text-2xl font-extrabold text-white tracking-widest mt-1">PROCESS TIMELINE</h2>
       </div>
-      <p class="text-zinc-555 text-xs tracking-wide max-w-md leading-relaxed">
+      <p class="text-zinc-300 text-sm tracking-wider max-w-md leading-relaxed font-semibold">
         A focused workflow for turning early ideas into polished digital experiences through clear direction, refined design, and smooth execution.
       </p>
     </div>
@@ -267,10 +267,10 @@ const services = [
   <section class="w-full max-w-6xl mx-auto px-6 py-24 cyber-divider relative z-10 pointer-events-auto font-['Chakra_Petch',sans-serif] reveal-on-scroll">
     <div class="flex flex-col md:flex-row items-start md:items-end justify-between gap-6 mb-16">
       <div>
-        <span class="text-[9px] font-bold tracking-[0.25em] text-zinc-500 uppercase">WHAT I CREATE</span>
+        <span class="text-[11px] font-extrabold tracking-[0.25em] text-zinc-400 uppercase">WHAT I CREATE</span>
         <h2 class="font-['Orbitron',sans-serif] text-xl md:text-2xl font-extrabold text-white tracking-widest mt-1">CORE SERVICES</h2>
       </div>
-      <p class="text-zinc-550 text-xs tracking-wide max-w-md leading-relaxed">
+      <p class="text-zinc-300 text-sm tracking-wider max-w-md leading-relaxed font-semibold">
         High-impact services for sharp interfaces, visual systems, and polished Framer/Astro execution.
       </p>
     </div>
@@ -288,12 +288,12 @@ const services = [
               {s.num} {s.name}
             </h3>
           </div>
-          <p class="text-zinc-500 text-xs leading-relaxed tracking-wide font-normal mb-6">
+          <p class="text-zinc-300 text-sm leading-relaxed tracking-wider font-semibold mb-6">
             {s.desc}
           </p>
           <div class="flex flex-wrap gap-2">
             {s.tags.map((tag) => (
-              <span class="text-[9px] border border-zinc-850 px-2.5 py-1 rounded bg-[#121218] text-zinc-400 group-hover:border-zinc-800 transition-colors font-mono">
+              <span class="text-[11px] border border-zinc-850 px-2.5 py-1 rounded bg-[#121218] text-zinc-300 group-hover:border-zinc-800 transition-colors font-mono font-bold tracking-wide">
                 {tag}
               </span>
             ))}
@@ -308,9 +308,9 @@ const services = [
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
       <!-- Label columns -->
       <div class="lg:col-span-4 font-['Chakra_Petch',sans-serif]">
-        <span class="text-[9px] font-bold tracking-[0.25em] text-zinc-500 uppercase">SYS: CHECK</span>
+        <span class="text-[11px] font-extrabold tracking-[0.25em] text-zinc-400 uppercase">SYS: CHECK</span>
         <h2 class="font-['Orbitron',sans-serif] text-xl md:text-2xl font-extrabold text-white tracking-widest mt-1">FAQs</h2>
-        <p class="text-zinc-550 text-xs tracking-wide leading-relaxed mt-4">
+        <p class="text-zinc-300 text-sm tracking-wider leading-relaxed mt-4 font-semibold">
           Everything you need to know about the creative process, timeline, project scope, and final delivery setup.
         </p>
       </div>

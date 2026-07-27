@@ -131,7 +131,7 @@ const filters = [
       {filters.map((f, i) => (
         <button 
           data-filter={f.id}
-          class={`px-4 py-2 border rounded text-[10px] font-bold tracking-widest transition-all duration-300 ${i === 0 ? "border-orange-500/30 text-orange-400 bg-orange-500/5 active-filter" : "border-zinc-850 text-zinc-500 hover:text-white"}`}
+          class={`px-4 py-2.5 border rounded text-[12px] font-extrabold tracking-widest transition-all duration-300 cursor-pointer ${i === 0 ? "border-orange-500/30 text-orange-400 bg-orange-500/5 active-filter" : "border-zinc-850 text-zinc-450 hover:text-white"}`}
         >
           {f.name}
         </button>

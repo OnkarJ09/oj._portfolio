@@ -59,5 +59,19 @@
   background: linear-gradient(90deg, transparent, rgba(249, 115, 22, 0.18), transparent);
 }
 
+/* Global Letter Spacing Upgrade */
+body {
+  letter-spacing: 0.025em; /* Subtle improvement for copy readability */
+}
+
+input, select, textarea, button {
+  letter-spacing: 0.025em;
+}
+
+/* Exclude monospace and glitched elements to preserve character alignment */
+code, pre, .font-mono, [class*="font-mono"], #tagline-glitch, #nav-local-clock {
+  letter-spacing: normal !important;
+}
+
 
 
