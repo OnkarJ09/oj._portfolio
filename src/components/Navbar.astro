@@ -10,7 +10,7 @@
         <span class="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></span>
         <span class="font-['Orbitron',sans-serif] font-bold text-base tracking-widest text-white uppercase ascii-ripple-text">ONKAR JOSHI</span>
       </div>
-      <span class="text-[12px] font-mono text-orange-500/80 tracking-wider pl-4 ascii-ripple-text">alias: mad_dog</span>
+      <span id="tagline-glitch" class="text-[12px] font-mono text-orange-500/80 tracking-wider pl-4 ascii-ripple-text">alias: mad_dog</span>
     </a>
 
     <!-- Navigation Links: Spotlight Navbar -->
@@ -202,7 +202,39 @@
     setTimeout(updateActiveIndicator, 50);
   }
 
+  function initTaglineGlitch() {
+    const el = document.getElementById("tagline-glitch");
+    if (!el) return;
+
+    if ((window as any)._taglineGlitchInterval) {
+      clearInterval((window as any)._taglineGlitchInterval);
+    }
+
+    const triggerGlitch = () => {
+      const rect = el.getBoundingClientRect();
+      const x = rect.left + Math.random() * rect.width;
+      el.dispatchEvent(new MouseEvent("mouseenter", {
+        clientX: x,
+        clientY: rect.top + rect.height / 2
+      }));
+      setTimeout(() => {
+        el.dispatchEvent(new MouseEvent("mouseleave"));
+      }, 700);
+    };
+
+    // Trigger initial glitch after short delay
+    setTimeout(triggerGlitch, 1500);
+
+    // Periodic glitch every 3.75 seconds
+    (window as any)._taglineGlitchInterval = setInterval(triggerGlitch, 3750);
+  }
+
   // Run on page load and astro page swap transitions
   initSpotlightNavbar();
-  document.addEventListener("astro:after-swap", initSpotlightNavbar);
+  initTaglineGlitch();
+
+  document.addEventListener("astro:after-swap", () => {
+    initSpotlightNavbar();
+    initTaglineGlitch();
+  });
 </script>
