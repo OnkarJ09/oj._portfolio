@@ -451,14 +451,81 @@ const services = [
       });
     }
 
-    function slidePrev() {
-      currentIndex = currentIndex > 0 ? currentIndex - 1 : maxIndex;
+    // ---- Scroll is the single source of truth for the active slide ----
+    // The carousel advances as the section's center travels from 85% -> 15%
+    // of the viewport. Every manual control (arrows, dots, swipe, wheel) is
+    // funneled through scrollToSlide(), which scrolls the page to the band
+    // that maps to the chosen slide. This keeps the scroll position and the
+    // visible slide in lockstep: no snap-back, no override conflicts.
+
+    function computeTargetIndex() {
+      const rect = container!.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const center = rect.top + rect.height / 2;
+      const startY = vh * 0.85;
+      const endY = vh * 0.15;
+      const distanceRange = startY - endY;
+      const offset = startY - center;
+      const ratio = Math.max(0, Math.min(0.99, offset / distanceRange));
+      return Math.floor(ratio * slides.length);
+    }
+
+    function syncToScroll() {
+      const targetIndex = computeTargetIndex();
+      if (targetIndex !== currentIndex && targetIndex >= 0 && targetIndex <= maxIndex) {
+        currentIndex = targetIndex;
+        updateCarousel();
+      }
+    }
+
+    // rAF-throttled scroll handler for smooth, jank-free syncing
+    let ticking = false;
+    let isProgrammaticScroll = false;
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        ticking = false;
+        if (!isProgrammaticScroll) {
+          syncToScroll();
+        } else if (computeTargetIndex() === currentIndex) {
+          // Programmatic smooth-scroll has landed on its target band:
+          // release the guard so manual scrolling resumes cleanly.
+          isProgrammaticScroll = false;
+        }
+      });
+    }
+
+    // Center slide `k` by scrolling the page to the band that maps to it.
+    // Using the band center (k + 0.5) / N keeps computeTargetIndex()'s floor() steady.
+    function scrollToSlide(k: number) {
+      const clamped = Math.max(0, Math.min(maxIndex, k));
+      const ratio = (clamped + 0.5) / slides.length;
+      const vh = window.innerHeight;
+      const targetCenter = vh * 0.85 - ratio * (vh * 0.7);
+      const rect = container!.getBoundingClientRect();
+      const currentCenter = rect.top + rect.height / 2;
+      const delta = currentCenter - targetCenter;
+      window.scrollTo({ top: window.scrollY + delta, behavior: "smooth" });
+    }
+
+    function gotoIndex(k: number) {
+      const clamped = Math.max(0, Math.min(maxIndex, k));
+      if (clamped === currentIndex) return;
+      // Swap the slide instantly, then silently scroll the page to the
+      // matching band under a guard (no intermediate-slide flicker).
+      currentIndex = clamped;
       updateCarousel();
+      isProgrammaticScroll = true;
+      scrollToSlide(clamped);
+    }
+
+    function slidePrev() {
+      gotoIndex(currentIndex > 0 ? currentIndex - 1 : maxIndex);
     }
 
     function slideNext() {
-      currentIndex = currentIndex < maxIndex ? currentIndex + 1 : 0;
-      updateCarousel();
+      gotoIndex(currentIndex < maxIndex ? currentIndex + 1 : 0);
     }
 
     // Remove existing event listeners by cloning button elements if needed
@@ -474,10 +541,7 @@ const services = [
     dots.forEach((dot, idx) => {
       const clone = dot.cloneNode(true);
       dot.replaceWith(clone);
-      clone.addEventListener("click", () => {
-        currentIndex = idx;
-        updateCarousel();
-      });
+      clone.addEventListener("click", () => gotoIndex(idx));
     });
 
     // Touch Swipe Navigation
@@ -516,40 +580,34 @@ const services = [
       }
     }, { passive: false });
 
-    // Clean up any existing scroll sync listener
+    // Clean up any existing scroll sync listeners (survive astro page swaps)
     if ((window as any)._carouselScrollListener) {
       window.removeEventListener("scroll", (window as any)._carouselScrollListener);
     }
+    if ((window as any)._carouselScrollEndListener) {
+      window.removeEventListener("scrollend", (window as any)._carouselScrollEndListener);
+    }
 
-    const scrollListener = () => {
-      const containerRect = container.getBoundingClientRect();
-      const viewportHeight = window.innerHeight;
-
-      // Track the center of the carousel container relative to the viewport center
-      const containerCenter = containerRect.top + containerRect.height / 2;
-      const startY = viewportHeight * 0.85;
-      const endY = viewportHeight * 0.15;
-      const distanceRange = startY - endY;
-
-      // Calculate ratio based on container center position
-      const offset = startY - containerCenter;
-      const ratio = Math.max(0, Math.min(0.99, offset / distanceRange));
-
-      const targetIndex = Math.floor(ratio * slides.length);
-      if (targetIndex !== currentIndex && targetIndex >= 0 && targetIndex <= maxIndex) {
-        currentIndex = targetIndex;
-        updateCarousel();
-      }
+    // Safety net: a programmatic smooth-scroll might not fire the final
+    // scroll event reliably (or at exact band center). scrollend fires once
+    // when the glide settles, so force-clear the guard and re-sync there.
+    const onScrollEnd = () => {
+      if (!isProgrammaticScroll) return;
+      isProgrammaticScroll = false;
+      syncToScroll();
     };
-
-    window.addEventListener("scroll", scrollListener, { passive: true });
-    (window as any)._carouselScrollListener = scrollListener;
+    window.addEventListener("scrollend", onScrollEnd, { passive: true });
+    (window as any)._carouselScrollEndListener = onScrollEnd;
+    (window as any)._carouselScrollListener = onScroll;
+    window.addEventListener("scroll", onScroll, { passive: true });
 
     // Handle Window Resize
     window.addEventListener("resize", updateCarousel);
 
-    // Initial load state
+    // Initial load state: place the carousel, then immediately sync the
+    // active slide to the current scroll position (fixes landing mid-section).
     updateCarousel();
+    syncToScroll();
   }
 
   function initPage() {
