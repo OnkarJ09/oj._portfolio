@@ -137,7 +137,7 @@ const services = [
     <!-- Perspective 3D Carousel Section -->
     <div class="relative w-full overflow-visible py-8 z-20 pointer-events-auto select-none reveal-on-scroll reveal-delay-150" id="projects-carousel-container">
       <!-- Carousel Viewport -->
-      <div class="relative w-full h-[530px] overflow-hidden" style="perspective: 1200px;">
+      <div class="relative w-full h-[380px] sm:h-[460px] md:h-[530px] overflow-hidden" style="perspective: 1200px;">
         <!-- Slides Track -->
         <div 
           id="carousel-track" 
@@ -358,8 +358,8 @@ const services = [
   }
   @media (max-w: 480px) {
     #projects-carousel-container {
-      --slide-width: 310px;
-      --slide-spacing: 120px;
+      --slide-width: 280px;
+      --slide-spacing: 110px;
     }
   }
   
@@ -423,7 +423,17 @@ const services = [
     const maxIndex = slides.length - 1;
 
     function updateCarousel() {
-      const spacing = parseFloat(getComputedStyle(container!).getPropertyValue("--slide-spacing"));
+      let spacing = 240;
+      let slideWidth = 500;
+      
+      const w = window.innerWidth;
+      if (w <= 480) {
+        spacing = 110;
+        slideWidth = 280;
+      } else if (w <= 768) {
+        spacing = 180;
+        slideWidth = 400;
+      }
 
       slides.forEach((slide, idx) => {
         const diff = idx - currentIndex;
@@ -434,6 +444,7 @@ const services = [
         const translateZ = isActive ? 0 : -220; // push inactive slides back
         const translateX = diff * spacing;
 
+        (slide as HTMLElement).style.width = `${slideWidth}px`;
         (slide as HTMLElement).style.transform = `translate3d(calc(-50% + ${translateX}px), -50%, ${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`;
         (slide as HTMLElement).style.opacity = isActive ? "1" : (Math.abs(diff) === 1 ? "0.38" : "0.08");
         (slide as HTMLElement).style.pointerEvents = isActive ? "auto" : "none";

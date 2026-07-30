@@ -129,19 +129,24 @@
   }
 
   // Mobile Menu Toggle handler
-  const menuBtn = document.getElementById("mobile-menu-btn");
-  const dropdown = document.getElementById("mobile-dropdown");
-  const menuIcon = document.getElementById("menu-icon");
+  function initMobileMenu() {
+    const menuBtn = document.getElementById("mobile-menu-btn");
+    const dropdown = document.getElementById("mobile-dropdown");
+    if (!menuBtn || !dropdown) return;
 
-  if (menuBtn && dropdown && menuIcon) {
-    menuBtn.addEventListener("click", () => {
+    // Clone button to strip existing listeners
+    const cleanBtn = menuBtn.cloneNode(true) as HTMLButtonElement;
+    menuBtn.replaceWith(cleanBtn);
+
+    cleanBtn.addEventListener("click", () => {
       const isHidden = dropdown.classList.contains("hidden");
+      const menuIcon = cleanBtn.querySelector("#menu-icon");
       if (isHidden) {
         dropdown.classList.remove("hidden");
-        menuIcon.setAttribute("d", "M6 18L18 6M6 6l12 12");
+        menuIcon?.setAttribute("d", "M6 18L18 6M6 6l12 12");
       } else {
         dropdown.classList.add("hidden");
-        menuIcon.setAttribute("d", "M4 6h16M4 12h16m-7 6h7");
+        menuIcon?.setAttribute("d", "M4 6h16M4 12h16m-7 6h7");
       }
     });
   }
@@ -230,10 +235,12 @@
   }
 
   // Run on page load and astro page swap transitions
+  initMobileMenu();
   initSpotlightNavbar();
   initTaglineGlitch();
 
   document.addEventListener("astro:after-swap", () => {
+    initMobileMenu();
     initSpotlightNavbar();
     initTaglineGlitch();
   });
