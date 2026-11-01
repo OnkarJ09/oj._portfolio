@@ -21,7 +21,7 @@ const {
 ---
 
 <div
-  onclick={`window.open('${link}', '_blank', 'noopener,noreferrer')`}
+  onclick={`if ('${link}'.startsWith('http')) { window.open('${link}', '_blank', 'noopener,noreferrer'); } else { window.location.href = '${link}'; }`}
   class={`project-card cursor-pointer relative w-full border border-zinc-800 bg-[#07070b] backdrop-blur-md rounded-sm overflow-hidden group transition-all duration-500 font-['Chakra_Petch',sans-serif]${reveal ? ' project-card--reveal' : ''}`}
 >
   <!-- Cyber Corner Tech Brackets (scroll-activated outline in reveal mode, hover otherwise) -->
@@ -66,7 +66,7 @@ const {
         {title}
       </h3>
       <span class="text-[10px] font-bold tracking-widest text-zinc-500 group-hover:text-orange-400 transition-colors flex items-center gap-1">
-        VISIT
+        VIEW CASE
         <svg class="w-3.5 h-3.5 transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7M17 7H7M17 7V17"></path>
         </svg>
