@@ -179,7 +179,7 @@ const services = [
         <div id="carousel-dots" class="flex items-center justify-center gap-2.5">
           {featuredProjects.map((_, idx) => (
             <button 
-              class="carousel-dot h-1.5 rounded transition-all duration-300 cursor-pointer"
+              class={`carousel-dot h-1.5 rounded transition-all duration-300 cursor-pointer ${idx === 0 ? "w-8 bg-orange-500 opacity-100" : "w-2.5 bg-zinc-700 opacity-30"}`}
               data-index={idx}
               aria-label={`Go to slide ${idx + 1}`}
             />
@@ -412,15 +412,26 @@ const services = [
   function setupCarousel() {
     const container = document.getElementById("projects-carousel-container");
     const track = document.getElementById("carousel-track");
-    const prevBtn = document.getElementById("carousel-prev-btn");
-    const nextBtn = document.getElementById("carousel-next-btn");
-    const dots = document.querySelectorAll(".carousel-dot");
     const slides = document.querySelectorAll(".carousel-slide");
     
     if (!container || !track || !slides.length) return;
 
     let currentIndex = 0;
     const maxIndex = slides.length - 1;
+    let isManual = false;
+    let manualAnchorY = window.scrollY;
+    let manualTimer: any = null;
+
+    function updateDots(activeIdx: number) {
+      const currentDots = document.querySelectorAll<HTMLElement>(".carousel-dot");
+      currentDots.forEach((dot, idx) => {
+        if (idx === activeIdx) {
+          dot.className = "carousel-dot h-1.5 rounded transition-all duration-300 cursor-pointer w-8 bg-orange-500 opacity-100";
+        } else {
+          dot.className = "carousel-dot h-1.5 rounded transition-all duration-300 cursor-pointer w-2.5 bg-zinc-700 opacity-30";
+        }
+      });
+    }
 
     function updateCarousel() {
       let spacing = 240;
@@ -444,31 +455,42 @@ const services = [
         const translateZ = isActive ? 0 : -220; // push inactive slides back
         const translateX = diff * spacing;
 
-        (slide as HTMLElement).style.width = `${slideWidth}px`;
-        (slide as HTMLElement).style.transform = `translate3d(calc(-50% + ${translateX}px), -50%, ${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`;
-        (slide as HTMLElement).style.opacity = isActive ? "1" : (Math.abs(diff) === 1 ? "0.38" : "0.08");
-        (slide as HTMLElement).style.pointerEvents = isActive ? "auto" : "none";
-        (slide as HTMLElement).style.zIndex = isActive ? "10" : `${5 - Math.abs(diff)}`;
+        const htmlSlide = slide as HTMLElement;
+        htmlSlide.style.width = `${slideWidth}px`;
+        htmlSlide.style.transform = `translate3d(calc(-50% + ${translateX}px), -50%, ${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`;
+        htmlSlide.style.opacity = isActive ? "1" : (Math.abs(diff) === 1 ? "0.38" : "0.08");
+        htmlSlide.style.pointerEvents = "auto";
+        htmlSlide.style.cursor = isActive ? "default" : "pointer";
+        htmlSlide.style.zIndex = isActive ? "10" : `${5 - Math.abs(diff)}`;
       });
 
-      dots.forEach((dot, idx) => {
-        if (idx === currentIndex) {
-          dot.classList.add("w-8", "bg-orange-500", "opacity-100");
-          dot.classList.remove("w-2.5", "bg-zinc-700", "opacity-30");
-        } else {
-          dot.classList.remove("w-8", "bg-orange-500", "opacity-100");
-          dot.classList.add("w-2.5", "bg-zinc-700", "opacity-30");
-        }
-      });
+      updateDots(currentIndex);
     }
 
-    // ---- Scroll is the single source of truth for the active slide ----
-    // The carousel advances as the section's center travels from 85% -> 15%
-    // of the viewport. Every manual control (arrows, dots, swipe, wheel) is
-    // funneled through scrollToSlide(), which scrolls the page to the band
-    // that maps to the chosen slide. This keeps the scroll position and the
-    // visible slide in lockstep: no snap-back, no override conflicts.
+    // Set slide manually via button/dot/swipe without jumping the window
+    function setManualSlide(k: number) {
+      currentIndex = Math.max(0, Math.min(maxIndex, k));
+      updateCarousel();
+      isManual = true;
+      manualAnchorY = window.scrollY;
+      if (manualTimer) clearTimeout(manualTimer);
+      // Keep manual slide active while looking at the section; releases once user scrolls away
+      manualTimer = setTimeout(() => {
+        isManual = false;
+      }, 5000);
+    }
 
+    function slidePrev() {
+      const target = currentIndex > 0 ? currentIndex - 1 : maxIndex;
+      setManualSlide(target);
+    }
+
+    function slideNext() {
+      const target = currentIndex < maxIndex ? currentIndex + 1 : 0;
+      setManualSlide(target);
+    }
+
+    // ---- Auto-advance on page scroll ----
     function computeTargetIndex() {
       const rect = container!.getBoundingClientRect();
       const vh = window.innerHeight;
@@ -481,78 +503,77 @@ const services = [
       return Math.floor(ratio * slides.length);
     }
 
-    function syncToScroll() {
-      const targetIndex = computeTargetIndex();
-      if (targetIndex !== currentIndex && targetIndex >= 0 && targetIndex <= maxIndex) {
-        currentIndex = targetIndex;
-        updateCarousel();
-      }
-    }
-
-    // rAF-throttled scroll handler for smooth, jank-free syncing
     let ticking = false;
-    let isProgrammaticScroll = false;
     function onScroll() {
       if (ticking) return;
       ticking = true;
       requestAnimationFrame(() => {
         ticking = false;
-        if (!isProgrammaticScroll) {
-          syncToScroll();
-        } else if (computeTargetIndex() === currentIndex) {
-          // Programmatic smooth-scroll has landed on its target band:
-          // release the guard so manual scrolling resumes cleanly.
-          isProgrammaticScroll = false;
+        // If user manually pressed a button/dot, don't overwrite until they scroll away (> 90px)
+        if (isManual) {
+          if (Math.abs(window.scrollY - manualAnchorY) > 90) {
+            isManual = false;
+          } else {
+            return;
+          }
+        }
+
+        const targetIndex = computeTargetIndex();
+        if (targetIndex !== currentIndex && targetIndex >= 0 && targetIndex <= maxIndex) {
+          currentIndex = targetIndex;
+          updateCarousel();
         }
       });
     }
 
-    // Center slide `k` by scrolling the page to the band that maps to it.
-    // Using the band center (k + 0.5) / N keeps computeTargetIndex()'s floor() steady.
-    function scrollToSlide(k: number) {
-      const clamped = Math.max(0, Math.min(maxIndex, k));
-      const ratio = (clamped + 0.5) / slides.length;
-      const vh = window.innerHeight;
-      const targetCenter = vh * 0.85 - ratio * (vh * 0.7);
-      const rect = container!.getBoundingClientRect();
-      const currentCenter = rect.top + rect.height / 2;
-      const delta = currentCenter - targetCenter;
-      window.scrollTo({ top: window.scrollY + delta, behavior: "smooth" });
+    // Prev & Next Buttons
+    const prevBtn = document.getElementById("carousel-prev-btn");
+    const nextBtn = document.getElementById("carousel-next-btn");
+
+    if (prevBtn) {
+      const newPrev = prevBtn.cloneNode(true) as HTMLElement;
+      prevBtn.replaceWith(newPrev);
+      newPrev.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        slidePrev();
+      });
     }
 
-    function gotoIndex(k: number) {
-      const clamped = Math.max(0, Math.min(maxIndex, k));
-      if (clamped === currentIndex) return;
-      // Swap the slide instantly, then silently scroll the page to the
-      // matching band under a guard (no intermediate-slide flicker).
-      currentIndex = clamped;
-      updateCarousel();
-      isProgrammaticScroll = true;
-      scrollToSlide(clamped);
+    if (nextBtn) {
+      const newNext = nextBtn.cloneNode(true) as HTMLElement;
+      nextBtn.replaceWith(newNext);
+      newNext.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        slideNext();
+      });
     }
 
-    function slidePrev() {
-      gotoIndex(currentIndex > 0 ? currentIndex - 1 : maxIndex);
+    // Dots Indicators: Event delegation on container
+    const dotsContainer = document.getElementById("carousel-dots");
+    if (dotsContainer) {
+      const newDotsContainer = dotsContainer.cloneNode(true) as HTMLElement;
+      dotsContainer.replaceWith(newDotsContainer);
+      newDotsContainer.addEventListener("click", (e) => {
+        const dot = (e.target as HTMLElement).closest(".carousel-dot");
+        if (!dot) return;
+        e.preventDefault();
+        e.stopPropagation();
+        const idx = parseInt(dot.getAttribute("data-index") || "0", 10);
+        setManualSlide(idx);
+      });
     }
 
-    function slideNext() {
-      gotoIndex(currentIndex < maxIndex ? currentIndex + 1 : 0);
-    }
-
-    // Remove existing event listeners by cloning button elements if needed
-    prevBtn?.replaceWith(prevBtn.cloneNode(true));
-    nextBtn?.replaceWith(nextBtn.cloneNode(true));
-
-    const newPrevBtn = document.getElementById("carousel-prev-btn");
-    const newNextBtn = document.getElementById("carousel-next-btn");
-
-    newPrevBtn?.addEventListener("click", slidePrev);
-    newNextBtn?.addEventListener("click", slideNext);
-
-    dots.forEach((dot, idx) => {
-      const clone = dot.cloneNode(true);
-      dot.replaceWith(clone);
-      clone.addEventListener("click", () => gotoIndex(idx));
+    // Clicking an inactive slide brings it to the center
+    slides.forEach((slide, idx) => {
+      slide.addEventListener("click", (e) => {
+        if (idx !== currentIndex) {
+          e.preventDefault();
+          e.stopPropagation();
+          setManualSlide(idx);
+        }
+      }, true);
     });
 
     // Touch Swipe Navigation
@@ -566,9 +587,9 @@ const services = [
     container.addEventListener("touchend", (e: TouchEvent) => {
       touchEndX = e.changedTouches[0].screenX;
       const swipeDistance = touchEndX - touchStartX;
-      if (swipeDistance > 55) {
+      if (swipeDistance > 45) {
         slidePrev();
-      } else if (swipeDistance < -55) {
+      } else if (swipeDistance < -45) {
         slideNext();
       }
     }, { passive: true });
@@ -576,11 +597,10 @@ const services = [
     // Wheel Scroll Navigation (Horizontal Swiping Only)
     let lastWheelTime = 0;
     container.addEventListener("wheel", (e: WheelEvent) => {
-      // Only trigger slide transitions for horizontal swipes (deltaX), keeping vertical page scroll intact
-      if (Math.abs(e.deltaX) > Math.abs(e.deltaY) && Math.abs(e.deltaX) > 10) {
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY) && Math.abs(e.deltaX) > 15) {
         e.preventDefault();
         const now = Date.now();
-        if (now - lastWheelTime < 600) return;
+        if (now - lastWheelTime < 450) return;
 
         if (e.deltaX > 0) {
           slideNext();
@@ -591,34 +611,41 @@ const services = [
       }
     }, { passive: false });
 
-    // Clean up any existing scroll sync listeners (survive astro page swaps)
+    // Keyboard Arrow Navigation when carousel container is hovered
+    const keyNav = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft") {
+        slidePrev();
+      } else if (e.key === "ArrowRight") {
+        slideNext();
+      }
+    };
+    container.addEventListener("mouseenter", () => {
+      window.addEventListener("keydown", keyNav);
+    });
+    container.addEventListener("mouseleave", () => {
+      window.removeEventListener("keydown", keyNav);
+    });
+
+    // Setup scroll listener for auto-advancing as user scrolls page
     if ((window as any)._carouselScrollListener) {
       window.removeEventListener("scroll", (window as any)._carouselScrollListener);
     }
-    if ((window as any)._carouselScrollEndListener) {
-      window.removeEventListener("scrollend", (window as any)._carouselScrollEndListener);
-    }
-
-    // Safety net: a programmatic smooth-scroll might not fire the final
-    // scroll event reliably (or at exact band center). scrollend fires once
-    // when the glide settles, so force-clear the guard and re-sync there.
-    const onScrollEnd = () => {
-      if (!isProgrammaticScroll) return;
-      isProgrammaticScroll = false;
-      syncToScroll();
-    };
-    window.addEventListener("scrollend", onScrollEnd, { passive: true });
-    (window as any)._carouselScrollEndListener = onScrollEnd;
     (window as any)._carouselScrollListener = onScroll;
     window.addEventListener("scroll", onScroll, { passive: true });
 
     // Handle Window Resize
+    if ((window as any)._carouselResizeListener) {
+      window.removeEventListener("resize", (window as any)._carouselResizeListener);
+    }
+    (window as any)._carouselResizeListener = updateCarousel;
     window.addEventListener("resize", updateCarousel);
 
-    // Initial load state: place the carousel, then immediately sync the
-    // active slide to the current scroll position (fixes landing mid-section).
+    // Initial sync
+    const initialIndex = computeTargetIndex();
+    if (initialIndex >= 0 && initialIndex <= maxIndex) {
+      currentIndex = initialIndex;
+    }
     updateCarousel();
-    syncToScroll();
   }
 
   function initPage() {
